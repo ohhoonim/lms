@@ -6,18 +6,44 @@ import org.springframework.stereotype.Service;
 
 import dev.ohhoonim.lms.domain.post.Post;
 import dev.ohhoonim.lms.domain.post.PostUsecase;
+import dev.ohhoonim.lms.domain.post.infra.PostCommandPort;
 import dev.ohhoonim.lms.domain.post.infra.PostQueryPort;
-import lombok.RequiredArgsConstructor;
+import dev.ohhoonim.lms.domain.utils.Condition;
 
 @Service
-@RequiredArgsConstructor
 public class PostAgent implements PostUsecase {
     
-    private final PostQueryPort postQuery;
+    private final PostQueryPort postQueryPort;
+    private final PostCommandPort postCommandPort;
+
+    public PostAgent(PostQueryPort postQueryPort, PostCommandPort postCommandPort) {
+        this.postQueryPort = postQueryPort;
+        this.postCommandPort = postCommandPort;
+    }
     
     @Override
-    public List<Post> postList() {
-        return postQuery.postList();
+    public List<Post> posts(Condition<Post, Long> postConditions) {
+        return postQueryPort.posts(postConditions);
     }
+    @Override
+    public Post getPost(Long id) {
+        return postQueryPort.getPost(id);
+    }
+
+    @Override
+    public void addPost(Post post) {
+        postCommandPort.addPost(post);
+    }
+
+    @Override
+    public void updatePost(Post post) {
+        postCommandPort.updatePost(post);
+    }
+
+    @Override
+    public void deletePost(Long id) {
+        postCommandPort.deletePost(id);
+    }
+
     
 }
