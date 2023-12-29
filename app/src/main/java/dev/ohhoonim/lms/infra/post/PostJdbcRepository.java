@@ -9,6 +9,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import dev.ohhoonim.lms.domain.post.Post;
@@ -17,7 +18,7 @@ import dev.ohhoonim.lms.domain.utils.Condition;
 @Repository("postJdbcRepository")
 public class PostJdbcRepository {
 
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public final DataSource datasource;
 
@@ -43,6 +44,21 @@ public class PostJdbcRepository {
         }
 
         return posts;
+    }
+
+    public void addPost(Post post) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addPost'");
+    }
+
+    public void updatePost(Post post) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updatePost'");
+    }
+
+    public void deletePost(long post) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletePost'");
     }
 
 }

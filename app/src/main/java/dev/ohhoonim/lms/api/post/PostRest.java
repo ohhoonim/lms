@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.ohhoonim.lms.domain.post.Post;
@@ -28,7 +27,7 @@ public class PostRest {
     }
     
     @GetMapping("")
-    public ResponseEntity<List<Post>> posts(@RequestBody Condition<Post, Long> condition) {
+    public ResponseEntity<List<Post>> posts(@RequestBody(required = false) Condition<Post, Long> condition) throws InterruptedException {
         return ResponseEntity.ok().body(postAgent.posts(condition));
     }
 
