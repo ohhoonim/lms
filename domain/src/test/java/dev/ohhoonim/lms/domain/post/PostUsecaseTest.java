@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,7 @@ public class PostUsecaseTest {
     @MethodSource("providePost")
     void getPostTest(List<Post> posts) {
         Long id = 1L;
-        when(postQuerPort.getPost(id)).thenReturn(posts.stream().filter(post -> id.equals(post.id())).findFirst().get());
+        when(postQuerPort.getPost(id)).thenReturn(Optional.of(posts.stream().filter(post -> id.equals(post.id())).findFirst().get()));
         assertEquals("matthew", postAgent.getPost(id).author());
     }
 

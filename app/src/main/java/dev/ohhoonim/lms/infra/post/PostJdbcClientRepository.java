@@ -3,9 +3,6 @@ package dev.ohhoonim.lms.infra.post;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
@@ -22,14 +19,35 @@ public class PostJdbcClientRepository {
 
     public List<PostPartial> posts(Condition<Post, Long> object) {
 
-        return jdbcClient.sql("select title, created_date_time, author, id from posts")
+        return jdbcClient.sql("select id, title as title_w, created_date_time, author from posts")
                 .query(PostPartial.class)
                 .list();
     }
 
-    public record PostPartial(String author, String title, LocalDateTime createdDateTime) {
+    public record PostPartial(String author, String titleW, LocalDateTime createdDateTime) {
         public Post toPost() {
-            return new Post(null, author, title, author, createdDateTime);
+            return new Post(null, author, titleW, author, createdDateTime, null);
+        }
+    }
+
+    public Post getPost(Long id) {
+        return jdbcClient.sql("""
+                select 
+                    id,
+                    author,
+                    title,
+                    contents,
+                    created_date_time                    
+                from posts 
+                where id = :id
+            """)
+            .param("id", id)
+            .query(PostSingle.class).single().toPost();
+    }
+
+    public record PostSingle(Long id, String author, String title, String contents, LocalDateTime createdDateTime) {
+        public Post toPost() {
+            return new Post(id, author, title, contents, createdDateTime, List.of());
         }
     }
 }

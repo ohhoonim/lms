@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import dev.ohhoonim.lms.domain.post.Comment;
 import dev.ohhoonim.lms.domain.post.Post;
 import dev.ohhoonim.lms.domain.post.PostUsecase;
 import dev.ohhoonim.lms.domain.post.infra.PostCommandPort;
@@ -25,9 +26,15 @@ public class PostAgent implements PostUsecase {
     public List<Post> posts(Condition<Post, Long> postConditions) {
         return postQueryPort.posts(postConditions);
     }
+
+    @Override
+    public List<Comment> refreshComments(Long postId) {
+        return postQueryPort.refreshComments(postId);
+    }
+
     @Override
     public Post getPost(Long id) {
-        return postQueryPort.getPost(id);
+        return postQueryPort.getPost(id).get();
     }
 
     @Override
@@ -44,6 +51,8 @@ public class PostAgent implements PostUsecase {
     public void deletePost(Long id) {
         postCommandPort.deletePost(id);
     }
+
+    
 
     
 }
