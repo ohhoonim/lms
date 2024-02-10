@@ -31,14 +31,16 @@ tasks.named('test') {
 bootJar { enabled = false }
 jar { enabled = true}
 
-jacoco {
-    toolVersion = "0.8.9"
-    // reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+test {
+    finalizedBy jacocoTestReport 
 }
+
 jacocoTestReport {
     reports {
         xml.required = true
         csv.required = false
+        html.required = true
+        xml.outputLocation = layout.buildDirectory.file('reports/jacoco/lms.domain.xml') 
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
     dependsOn test 
@@ -49,18 +51,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.5
-            }
-        }
-
-        rule {
-            enabled = false
-            element = 'CLASS'
-
-            limit {
-                counter = 'METHOD'
-                value = 'COVEREDRATIO'
-                maximum = 0.5
+                minimum = 0.6 // 커버리지가 60% 미만이면 빌드 실패
             }
         }
     }

@@ -34,7 +34,8 @@ public class PostAgent implements PostUsecase {
 
     @Override
     public Post getPost(Long id) {
-        return postQueryPort.getPost(id).get();
+        var optPost = postQueryPort.getPost(id);
+        return optPost.isPresent() ? optPost.get() : null;
     }
 
     @Override
@@ -51,8 +52,5 @@ public class PostAgent implements PostUsecase {
     public void deletePost(Long id) {
         postCommandPort.deletePost(id);
     }
-
-    
-
-    
+  
 }
