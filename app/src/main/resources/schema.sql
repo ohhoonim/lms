@@ -1,3 +1,5 @@
+CREATE SCHEMA lms AUTHORIZATION postgres;
+
 CREATE TABLE IF NOT EXISTS posts (
 	id bigserial NOT NULL,
 	author varchar(255) NULL,

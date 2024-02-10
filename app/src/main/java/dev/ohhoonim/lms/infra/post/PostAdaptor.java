@@ -3,7 +3,6 @@ package dev.ohhoonim.lms.infra.post;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import dev.ohhoonim.lms.domain.post.Comment;
@@ -33,15 +32,18 @@ public class PostAdaptor implements PostQueryPort, PostCommandPort {
 
     @Override
     public Optional<Post> getPost(Long id) {
-        Post post;
+        Post post = null;
         try {
-            var content = postRepository.getPost(id);
-            var comments = commentRepository.retrieve(id);
-            post = content.retrieveComment(comments);
-        } catch (EmptyResultDataAccessException e) {
+            var optContent = postRepository.getPost(id);
+            if (optContent.isPresent()) {
+                var content = optContent.get();
+                var comments = commentRepository.retrieve(id);
+                post = content.retrieveComment(comments);
+            }
+        } catch (Throwable e) {
             return Optional.empty();
         }
-        return Optional.of(post);
+        return Optional.ofNullable(post);
     }
 
     @Override

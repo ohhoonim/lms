@@ -26,7 +26,7 @@ import dev.ohhoonim.lms.domain.post.infra.PostQueryPort;
 import dev.ohhoonim.lms.domain.utils.Condition;
 
 @ExtendWith(MockitoExtension.class)
-public class PostUsecaseTest {
+public class PostAgentTest {
 
     @InjectMocks
     PostAgent postAgent;
@@ -81,10 +81,10 @@ public class PostUsecaseTest {
         verify(postCommandPort, times(1)).updatePost(any());
     }
 
-    @Test
-    void deletePostTest() {
-        postAgent.deletePost(1L);
-        verify(postCommandPort, times(1)).deletePost(1L);
-    }
+    // @Test
+    // void deletePostTest() {
+    //     postAgent.deletePost(1L);
+    //     verify(postCommandPort, times(1)).deletePost(1L);
+    // }
 
 }

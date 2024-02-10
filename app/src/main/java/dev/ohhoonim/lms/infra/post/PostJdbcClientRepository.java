@@ -2,6 +2,7 @@ package dev.ohhoonim.lms.infra.post;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -30,19 +31,25 @@ public class PostJdbcClientRepository {
         }
     }
 
-    public Post getPost(Long id) {
-        return jdbcClient.sql("""
-                select 
-                    id,
-                    author,
-                    title,
-                    contents,
-                    created_date_time                    
-                from posts 
-                where id = :id
-            """)
-            .param("id", id)
-            .query(PostSingle.class).single().toPost();
+    public Optional<Post> getPost(Long id) {
+        Post post = null;;
+        try {
+            post = jdbcClient.sql("""
+                    select 
+                        id,
+                        author,
+                        title,
+                        contents,
+                        created_date_time                    
+                    from posts 
+                    where id = :id
+                """)
+                .param("id", id)
+                .query(PostSingle.class).single().toPost();
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(post);
     }
 
     public record PostSingle(Long id, String author, String title, String contents, LocalDateTime createdDateTime) {

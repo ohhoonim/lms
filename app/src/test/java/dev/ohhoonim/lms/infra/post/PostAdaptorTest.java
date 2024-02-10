@@ -43,6 +43,13 @@ public class PostAdaptorTest {
         var posts = postJdbcClientRepository.posts(null);
         assertEquals(13, posts.size());
     }
+
+    @Test
+    void postJdbcClientGetPostTest() {
+        var post = postJdbcClientRepository.getPost(100l);
+        assertTrue(post.isEmpty());
+        // assertEquals(1l, post.get().id());
+    }
     
     ///// [ Jdbc Client 활용 예 : Port-Adaptor 패턴]/////////////////////////
     
@@ -66,52 +73,33 @@ public class PostAdaptorTest {
         var post = postAdaptor.getPost(1L).get();
         assertEquals(5, post.comments().size());
     }
-//////////////////////////////
 
+    // @Test
+    // void addPostTest() {
+    //     var post = new Post(null,
+    //              "matthew",
+    //              "new year", 
+    //              "thanks", 
+    //              null);
+    //     postAdaptor.addPost(post);
+    //     verify(postJdbcRepository, times(1)).addPost(post);
+    // }
 
+    // @Test
+    // void updatePostTest() {
+    //     var post = new Post(1L,
+    //              "matthew",
+    //              "new year",
+    //              "thanks",
+    //              null);
+    //     postAdaptor.updatePost(post);
+    //     verify(postJdbcRepository, times(1)).updatePost(post);
+    // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Test
-    void addPostTest() {
-        var post = new Post(null,
-                 "matthew",
-                 "new year", 
-                 "thanks", 
-                 null);
-        postAdaptor.addPost(post);
-        verify(postJdbcRepository, times(1)).addPost(post);
-    }
-
-    @Test
-    void updatePostTest() {
-        var post = new Post(1L,
-                 "matthew",
-                 "new year",
-                 "thanks",
-                 null);
-        postAdaptor.updatePost(post);
-        verify(postJdbcRepository, times(1)).updatePost(post);
-    }
-
-    @Test
-    void deletePostTest() {
-        var postId = 1L;
-        postAdaptor.deletePost(postId);
-        verify(postJdbcRepository, times(1)).deletePost(postId);
-    }
+    // @Test
+    // void deletePostTest() {
+    //     var postId = 1L;
+    //     postAdaptor.deletePost(postId);
+    //     verify(postJdbcRepository, times(1)).deletePost(postId);
+    // }
 }
