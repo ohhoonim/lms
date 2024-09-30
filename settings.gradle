@@ -1,3 +1,1 @@
-rootProject.name = 'application'
-include('app')
-include('domain')
+rootProject.name = 'lms'
