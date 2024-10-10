@@ -37,6 +37,7 @@ dependencies {
 	runtimeOnly 'org.springframework.modulith:spring-modulith-events-amqp'
 	implementation 'org.springframework.modulith:spring-modulith-events-api'
 	implementation 'com.infobip:infobip-spring-data-jdbc-querydsl-boot-starter:9.0.7'
+	annotationProcessor 'com.infobip:infobip-spring-data-jdbc-annotation-processor:9.0.7'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
