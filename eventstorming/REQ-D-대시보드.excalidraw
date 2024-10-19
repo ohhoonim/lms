@@ -1,0 +1,80 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "type": "rectangle",
+      "version": 536,
+      "versionNonce": 1577478343,
+      "isDeleted": false,
+      "id": "Nxx5SxMKkMZ1b9z5CWNCN",
+      "fillStyle": "solid",
+      "strokeWidth": 0.5,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 268.0390930175781,
+      "y": 243.427734375,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#ffc9c9",
+      "width": 130.33203125,
+      "height": 122.29687500000001,
+      "seed": 523484103,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "DBuIHQqiRZDaF_mf8PH2-"
+        }
+      ],
+      "updated": 1729311746245,
+      "link": null,
+      "locked": false
+    },
+    {
+      "type": "text",
+      "version": 646,
+      "versionNonce": 1422282471,
+      "isDeleted": false,
+      "id": "DBuIHQqiRZDaF_mf8PH2-",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "angle": 0,
+      "x": 295.4051208496094,
+      "y": 294.976171875,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#ffec99",
+      "width": 75.5999755859375,
+      "height": 19.2,
+      "seed": 217492199,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1729311731743,
+      "link": null,
+      "locked": false,
+      "fontSize": 16,
+      "fontFamily": 4,
+      "text": "작성 보류 중",
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "containerId": "Nxx5SxMKkMZ1b9z5CWNCN",
+      "originalText": "작성 보류 중",
+      "lineHeight": 1.2,
+      "baseline": 15
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#e4e4e4"
+  },
+  "files": {}
+}
