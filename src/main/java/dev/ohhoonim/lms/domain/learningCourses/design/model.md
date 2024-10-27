@@ -46,7 +46,10 @@ package model {
     class Subject {
         id: UUID
         subejctName: String
+        professor: Professor
+        lectureMethod: Set<String>
         syllabus: Syllabus
+        useYn: Boolean
         
     }
     note top
@@ -65,6 +68,7 @@ package model {
         lectureSequence: Integer
         lectureTitle: String
         lectureContents: String
+        lectureMethod: String
         professor: Set<Professor>
         assistant: Set<Assistant>
         lectureHours: BigDecimal
@@ -90,6 +94,9 @@ package model {
 
     interface SubjectUsecase {
         setSyllabus(syllabus: Syllabus)
+        getLectureMethod(): Set<String>
+        getCurriculums(subject: Subject) : Curriculum
+        getSyllabus(subject: Subject) : Syllabus
     }
 
     interface SyllabusUsecase {
