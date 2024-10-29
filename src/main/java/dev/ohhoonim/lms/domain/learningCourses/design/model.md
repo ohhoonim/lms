@@ -97,6 +97,7 @@ package model {
         getLectureMethod(): Set<String>
         getCurriculums(subject: Subject) : Curriculum
         getSyllabus(subject: Subject) : Syllabus
+        findProfessor(professorName: String): List<Professor>
     }
 
     interface SyllabusUsecase {

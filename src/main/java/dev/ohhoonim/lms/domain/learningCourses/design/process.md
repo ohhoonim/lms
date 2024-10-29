@@ -15,13 +15,13 @@ note
     Course Coordinator 라고 명칭함 
 end note
 |교수자|
-:학습과정 조회<
+:과목 조회<
 note right 
     학습과정을 조회 후 과목을 
     선택한다
 end note
 :<<command>>\n강의 계획서 작성]
-:강의명, 목적과 목표 입력됨;
+:챕터명, 목적과 목표 입력됨;
 note right
     목적 : 달성하고자 하는것
     목표 : 구체적인 결과
