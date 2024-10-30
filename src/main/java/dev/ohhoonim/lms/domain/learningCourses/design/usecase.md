@@ -13,7 +13,11 @@ component learningCourse {
     (학습과정 관리) as req_o <<REQ-O>>
 
 }
+
+[데이터 변경이력] <<REQ-NF8>>
+
 professor --> req_a
 manager -up-> req_o
+learningCourse ...|> [데이터 변경이력]
 @enduml
 ```
