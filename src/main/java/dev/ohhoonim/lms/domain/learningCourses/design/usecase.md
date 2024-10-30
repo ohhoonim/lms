@@ -18,6 +18,6 @@ component learningCourse {
 
 professor --> req_a
 manager -up-> req_o
-req_o ...|> [데이터 변경이력]
+learningCourse ...|> [데이터 변경이력]
 @enduml
 ```

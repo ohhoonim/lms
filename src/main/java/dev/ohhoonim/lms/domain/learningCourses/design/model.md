@@ -5,23 +5,31 @@
 ```plantuml
 @startuml
 package model {
+    class Manager <User vo>
     '학습과정(커리큘럼)
     class Curriculum {
         id: Long
         curriculumName: String
         curriculumRound: CurriculumRound
+        manager: Manger
+        times: Ingter
+        learningTarget: String
+        useYn: Boolean
         subjects: List<Subject>
-        
+        contents: String 
     }
     note left 
         curriculum은 동일 과목에 차수만 달리될 수 있다. 
         subject정보는 동일하다
         차수는 일정과 관련이 있다. 
     end note
+    
+    Manager .. Curriculum
+    
     class CurriculumRound {
         id: Long
-        start: Date
-        end: Date
+        startDate: LocalDate
+        endDate: LocalDate
         roundName: String
         
     }
@@ -29,6 +37,8 @@ package model {
     class RoundLecturePlan {
         curriculumRound: CurriculumRound
         lecture: Lecture
+        professor: Set<Professor>
+        assistant: Set<Assistant>
         lecatureStartDateTime: DateTime
         lecatureendtDateTime: DateTime
     }
@@ -69,8 +79,6 @@ package model {
         lectureTitle: String
         lectureContents: String
         lectureMethod: String
-        professor: Set<Professor>
-        assistant: Set<Assistant>
         lectureHours: BigDecimal
         
     }
@@ -81,15 +89,17 @@ package model {
     Curriculum [curriculumRound] --- "1..*" Subject : add >
     Subject -left- Syllabus : set >
     Syllabus "1" --- "1..*" Lecture : add >
-    Lecture .left. Professor
-    Lecture .left. Assistant
+    RoundLecturePlan .left. Professor
+    RoundLecturePlan .left. Assistant
 
     interface CurriculumUsecase {
-        addSubject(subject: Subject)
+        addSubjectInCurriculum(subject: Subject)
+        findSubject(subject: Subject)
         newRound(this): Curriculum
         generatePlan(): RoundLecturePlan
         getHollydays(startDate: Date, endDate: Date): List<Hollyday>
-
+        calculateEndDate(): LocalDate
+        saveCurriculum(curriculum: Curriculum): Curriculum
     }
 
     interface SubjectUsecase {
