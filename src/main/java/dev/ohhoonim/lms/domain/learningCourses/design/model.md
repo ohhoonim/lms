@@ -37,27 +37,25 @@ package model {
     class RoundLecturePlan {
         curriculumRound: CurriculumRound
         lecture: Lecture
-        professor: Set<Professor>
-        assistant: Set<Assistant>
-        lecatureStartDateTime: DateTime
-        lecatureendtDateTime: DateTime
+        professors: Set<Professor>
+        assistants: Set<Assistant>
+        lecatureStartDateTime: LocalDateTime
+        lecatureEndtDateTime: LocalDateTime
     }
+
+    class ClassHollyday <Hellyday vo> 
 
     Curriculum "1" *-- "1..*" CurriculumRound
     CurriculumRound -- RoundLecturePlan : generate >
     CurriculumRound ...> Lecture : use
-    CurriculumRound .left.> Hollyday : use
+    CurriculumRound .left.> ClassHollyday: use
 
-    class Hollyday {
-        lectureDay: Date
-        isHollyday: Boolean
-    }
     '과목
     class Subject {
         id: UUID
         subejctName: String
         professor: Professor
-        lectureMethod: Set<String>
+        lectureMethods: Set<LectureMethod>
         syllabus: Syllabus
         useYn: Boolean
         
@@ -78,8 +76,8 @@ package model {
         lectureSequence: Integer
         lectureTitle: String
         lectureContents: String
-        lectureMethod: String
-        lectureHours: BigDecimal
+        lectureMethod: LectureMethodEnum 
+        lectureMinutes: BigDecimal
         
     }
 
@@ -94,7 +92,7 @@ package model {
 
     interface CurriculumUsecase {
         addSubjectInCurriculum(subject: Subject)
-        findSubject(subject: Subject)
+        findSubject(subject: Subject): Subject
         newRound(this): Curriculum
         generatePlan(): RoundLecturePlan
         getHollydays(startDate: Date, endDate: Date): List<Hollyday>
@@ -104,7 +102,7 @@ package model {
 
     interface SubjectUsecase {
         setSyllabus(syllabus: Syllabus)
-        getLectureMethod(): Set<String>
+        getLectureMethod(): Set<LectureMethod>
         getCurriculums(subject: Subject) : Curriculum
         getSyllabus(subject: Subject) : Syllabus
         findProfessor(professorName: String): List<Professor>
@@ -112,8 +110,8 @@ package model {
 
     interface SyllabusUsecase {
         addLecture(lecture: Lecture)
-        findProfessor(): List<Professor>
-        findAssistant(): List<Assistant>
+        findProfessor(professor: Professor): List<Professor>
+        findAssistant(assistant: Assistant): List<Assistant>
     }
 
     class CurriculumService  
@@ -140,6 +138,31 @@ package model {
     SubjectService ..> CommandPort
     SyllabusService ..> CommandPort
 }
+
+component masterCode {
+
+    enum LectureMethod {
+        ONLINE 
+        OFFLINE
+        BOTH
+    }
+}
+
+component hollyday {
+
+    class Hollyday {
+        lectureDay: Date
+        isHollyday: Boolean
+    }
+}
+
+component user {
+    class User
+}
+
+model -> masterCode
+model --> hollyday
+model ---> user
 @enduml
 ```
 
