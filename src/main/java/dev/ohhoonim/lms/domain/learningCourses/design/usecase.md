@@ -15,9 +15,13 @@ component learningCourse {
 }
 
 [데이터 변경이력] <<REQ-NF8>>
+[회원관리] <<REQ-NF2>>
+[마스터코드 관리] <<REQ-NF9>>
 
 professor --> req_a
 manager -up-> req_o
-learningCourse ...|> [데이터 변경이력]
+learningCourse ...> [데이터 변경이력]
+learningCourse ...> [회원관리]
+learningCourse ...> [마스터코드 관리]
 @enduml
 ```
