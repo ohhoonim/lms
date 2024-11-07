@@ -10,15 +10,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CurriculumRound {
     private Long id;
+    private String roundName;
+    private Integer round;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String roundName;
 
     @Builder
-    public CurriculumRound(Long id, LocalDate startDate, LocalDate endDate, String roundName) {
+    public CurriculumRound(Long id, 
+            String roundName, Integer round,
+            LocalDate startDate, LocalDate endDate ) {
         this.id = id;
+        this.roundName = roundName;
+        this.round= round;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.roundName = roundName;
     }
 }

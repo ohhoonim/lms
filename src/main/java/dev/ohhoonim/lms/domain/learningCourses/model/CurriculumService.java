@@ -37,9 +37,9 @@ public class CurriculumService implements CurriculumUsecase {
 
     @Override
     @Transactional
-    public Curriculum newRound(Curriculum prevCurriculum) {
+    public Curriculum newRound(final Curriculum prevCurriculum) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newRound'");
+        throw new UnsupportedOperationException("Unimplemented method 'findSubject'");
     }
 
     @Override
@@ -64,7 +64,17 @@ public class CurriculumService implements CurriculumUsecase {
     @Override
     @Transactional
     public Curriculum saveCurriculum(Curriculum curriculum) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveCurriculum'");
+        var id = curriculum.getId();
+        if (id == null || id == 0L) {
+            curriculum.setUseYn(true);
+            if (curriculum.getCurriculumRound() == null) {
+                CurriculumRound newRound = CurriculumRound.builder()
+                        .roundName("1차")
+                        .build();
+                curriculum.setCurriculumRound(newRound);
+            }
+        }
+
+        return command.saveCurriculum(curriculum);
     }
 }

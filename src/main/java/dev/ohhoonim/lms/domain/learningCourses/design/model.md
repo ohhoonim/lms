@@ -12,7 +12,6 @@ package model {
         curriculumName: String
         curriculumRound: CurriculumRound
         manager: Manger
-        times: Ingter
         learningTarget: String
         useYn: Boolean
         subjects: List<Subject>
@@ -28,9 +27,10 @@ package model {
     
     class CurriculumRound {
         id: Long
+        roundName: String
+        round: Integer
         startDate: LocalDate
         endDate: LocalDate
-        roundName: String
         
     }
 
