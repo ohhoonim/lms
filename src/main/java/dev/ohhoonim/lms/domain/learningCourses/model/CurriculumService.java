@@ -2,6 +2,7 @@ package dev.ohhoonim.lms.domain.learningCourses.model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,9 +38,29 @@ public class CurriculumService implements CurriculumUsecase {
 
     @Override
     @Transactional
-    public Curriculum newRound(final Curriculum prevCurriculum) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findSubject'");
+    public Curriculum newRound(Long curriculumId) {
+        Curriculum old = this.findCurriculum(curriculumId);
+        CurriculumRound oldRound = old.getCurriculumRound();
+
+        // 날짜는 복제안함
+        var newRound = CurriculumRound.builder()
+                .roundName(oldRound.getRoundName())
+                .round(oldRound.getRound() + 1)
+                .textbook(oldRound.getTextBook())                
+                .build();
+
+        // 변경되는 사항 : 차수(자동계산), 교재
+        var newCurriculum = Curriculum.builder()
+                .curriculumName(old.getCurriculumName())
+                .curriculumRound(newRound)
+                .manager(old.getManager())
+                .learningTarget(old.getLearningTarget())
+                .useYn(true)
+                .subjects(old.getSubjects())
+                .contents(old.getContents())
+                .build();
+
+        return command.saveCurriculum(newCurriculum);
     }
 
     @Override
@@ -76,5 +97,20 @@ public class CurriculumService implements CurriculumUsecase {
         }
 
         return command.saveCurriculum(curriculum);
+    }
+
+    @Override
+    public Curriculum findCurriculum(Long curriculumId) throws NotFoundCurriculum {
+        Optional<Curriculum> curriculum = query.findCurriculum(curriculumId);
+        if (curriculum.isEmpty()) {
+            throw new NotFoundCurriculum(curriculumId + "에 대한 커리큘럼이 존재하지 않습니다.");
+        }
+        return curriculum.get();
+    }
+
+    @Override
+    public List<Curriculum> findCurriculum(Curriculum filter) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findCurriculum'");
     }
 }

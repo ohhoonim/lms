@@ -31,6 +31,7 @@ package model {
         round: Integer
         startDate: LocalDate
         endDate: LocalDate
+        textbook: String
         
     }
 

@@ -2,8 +2,6 @@ package dev.ohhoonim.lms.domain.learningCourses.model;
 
 import java.util.List;
 
-import javax.security.auth.Subject;
-
 import dev.ohhoonim.lms.component.user.User.Manager;
 import lombok.Builder;
 import lombok.Getter;

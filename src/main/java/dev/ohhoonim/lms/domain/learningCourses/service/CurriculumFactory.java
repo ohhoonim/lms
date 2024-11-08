@@ -1,5 +1,7 @@
 package dev.ohhoonim.lms.domain.learningCourses.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 
 import dev.ohhoonim.lms.domain.learningCourses.model.Curriculum;
@@ -20,6 +22,12 @@ public class CurriculumFactory implements CurriculumCommand, CurriculumQuery {
     public CurriculumRound getLastRound(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getLastRound'");
+    }
+
+    @Override
+    public Optional<Curriculum> findCurriculum(Long curriculumId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findCurriculum'");
     }
     
 }

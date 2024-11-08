@@ -14,15 +14,18 @@ public class CurriculumRound {
     private Integer round;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String textBook;
 
     @Builder
     public CurriculumRound(Long id, 
             String roundName, Integer round,
-            LocalDate startDate, LocalDate endDate ) {
+            LocalDate startDate, LocalDate endDate,
+            String textbook ) {
         this.id = id;
         this.roundName = roundName;
         this.round= round;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.textBook = textbook;
     }
 }
