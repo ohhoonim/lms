@@ -5,7 +5,7 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import dev.ohhoonim.lms.component.masterCode.CompletedStatus;
 import dev.ohhoonim.lms.component.masterCode.LectureMethod;
 
 @Getter
@@ -17,16 +17,18 @@ public class Lecture {
     private String lectureContents;
     private LectureMethod lectureMethod;
     private Integer lectureMinutes;
+    private CompletedStatus completed;
 
     @Builder
     public Lecture(UUID id, Integer lectureSequence, String lectureTitle, String lectureContents, LectureMethod lectureMethod,
-            Integer lectureMinutes) {
+            Integer lectureMinutes, CompletedStatus completed) {
         this.id = id;
         this.lectureSequence = lectureSequence;
         this.lectureTitle = lectureTitle;
         this.lectureContents = lectureContents;
         this.lectureMethod = lectureMethod;
         this.lectureMinutes = lectureMinutes;
+        this.completed = completed;
     }
 
 }

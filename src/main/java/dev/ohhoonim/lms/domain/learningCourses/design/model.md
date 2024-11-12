@@ -55,10 +55,11 @@ package model {
     class Subject {
         id: UUID
         subejctName: String
-        professor: Professor
         lectureMethods: Set<LectureMethod>
+        professor: Professor
         syllabus: Syllabus
         useYn: Boolean
+        completed: CompletedStatus
         
     }
     note top
@@ -79,13 +80,13 @@ package model {
         lectureContents: String
         lectureMethod: LectureMethodEnum 
         lectureMinutes: BigDecimal
-        
+        completed: CompletedStatus 
     }
 
     class Professor <User vo> 
     class Assistant <User vo>
 
-    Curriculum [curriculumRound] --- "1..*" Subject : add >
+    Curriculum [curriculumRound] "1..*" --- "1..*" Subject : add >
     Subject -left- Syllabus : set >
     Syllabus "1" --- "1..*" Lecture : add >
     RoundLecturePlan .left. Professor
@@ -103,7 +104,6 @@ package model {
 
     interface SubjectUsecase {
         setSyllabus(syllabus: Syllabus)
-        getLectureMethod(): Set<LectureMethod>
         getCurriculums(subject: Subject) : Curriculum
         getSyllabus(subject: Subject) : Syllabus
         findProfessor(professorName: String): List<Professor>

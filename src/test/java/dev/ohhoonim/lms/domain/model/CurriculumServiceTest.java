@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,13 +20,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.ohhoonim.lms.domain.learningCourses.model.AlreadyExists;
 import dev.ohhoonim.lms.domain.learningCourses.model.Curriculum;
 import dev.ohhoonim.lms.domain.learningCourses.model.CurriculumRound;
 import dev.ohhoonim.lms.domain.learningCourses.model.CurriculumService;
+import dev.ohhoonim.lms.domain.learningCourses.model.NotExist;
 import dev.ohhoonim.lms.domain.learningCourses.model.NotFoundCurriculum;
 import dev.ohhoonim.lms.domain.learningCourses.model.Subject;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.CurriculumCommand;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.CurriculumQuery;
+import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectQuery;
 
 @ExtendWith(MockitoExtension.class)
 public class CurriculumServiceTest {
@@ -36,6 +42,9 @@ public class CurriculumServiceTest {
 
 	@Mock
 	CurriculumCommand command;
+
+	@Mock
+	SubjectQuery subjectQuery;
 
 	@Test
 	@DisplayName("신규 커리큘럼 생성")
@@ -180,7 +189,7 @@ public class CurriculumServiceTest {
 		// 차수가 1증가 함
 		// 과목이 그대로 보전됨
 		var newRound = Curriculum.builder()
-				.curriculumRound(CurriculumRound.builder().round(2).build())	
+				.curriculumRound(CurriculumRound.builder().round(2).build())
 				.subjects(List.of(Subject.builder().build(), Subject.builder().build()))
 				.build();
 		when(command.saveCurriculum(any())).thenReturn(newRound);
@@ -189,8 +198,69 @@ public class CurriculumServiceTest {
 		Curriculum result = service.newRound(curriculumId);
 		assertEquals(2, result.getCurriculumRound().getRound());
 		assertEquals(2, result.getSubjects().size());
+	}
 
+	@Test
+	@DisplayName("과목 검색, 커리큘럼 아이디가 없을때")
+	public void findSubjectNonCurriculumId() {
+		// given
+		Long curriculumId = 0L;
+		var paramSubject = Subject.builder().build();
 
+		// then
+		assertThrowsExactly(NotFoundCurriculum.class, () -> service.findSubject(paramSubject, curriculumId));
+	}
 
+	@Test
+	@DisplayName("과목 검색")
+	public void findSubjects() {
+		// given
+		Long curriculumId = 1L;
+		var paramSubject = Subject.builder().build();
+
+		service.findSubject(paramSubject, curriculumId);
+		verify(query, times(1)).findSubjectsInCurriculum(any(), any());
+
+	}
+
+	@Test
+	@DisplayName("커리큘럼에 과목 등록하기, 없는 과목 ")
+	public void addSubjectInCurriculumNotExist() {
+		UUID checkId = UUID.randomUUID();
+		// given
+		var subjectParam =  checkId; 
+		Long idParam = 1L;
+
+		// when
+		when(subjectQuery.findSubjectById(any()))
+			.thenReturn(Optional.empty());
+
+		// then
+		assertThrowsExactly(NotExist.class, () -> 
+			service.addSubjectInCurriculum(subjectParam, idParam));
+	}
+
+	@Test
+	@DisplayName("커리큘럼에 과목 등록하기. 이미등록된 과목")
+	public void addSubjectInCurriculumAlreadyExists() {
+		UUID checkId = UUID.randomUUID();
+		// given
+		var subjectParam =  checkId; 
+		Long idParam = 1L;
+
+		// when
+		List<Subject> resultSubject = List.of(
+			Subject.builder().id(UUID.randomUUID()).build(),
+			Subject.builder().id(checkId).build(),
+			Subject.builder().id(UUID.randomUUID()).build()
+		);
+		when(query.findSubjectsInCurriculum(any(), any()))
+			.thenReturn(resultSubject);
+
+		when(subjectQuery.findSubjectById(any()))
+			.thenReturn(Optional.of(Subject.builder().build()));
+		// then
+		assertThrowsExactly(AlreadyExists.class, () -> 
+			service.addSubjectInCurriculum(subjectParam, idParam));
 	}
 }
