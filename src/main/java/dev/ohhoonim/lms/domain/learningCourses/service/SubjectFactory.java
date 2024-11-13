@@ -31,4 +31,10 @@ public class SubjectFactory implements SubjectCommand, SubjectQuery {
         throw new UnsupportedOperationException("Unimplemented method 'findSubjectById'");
     }
 
+    @Override
+    public boolean existsSubject(UUID subjectId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'existsSubject'");
+    }
+
 }

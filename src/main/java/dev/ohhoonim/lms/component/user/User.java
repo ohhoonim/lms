@@ -1,7 +1,11 @@
 package dev.ohhoonim.lms.component.user;
 
-public sealed interface User {
-    public final class Manager implements User {}
-    public final class Professor implements User {}
-    public final class Assistant implements User {}
+import java.util.UUID;
+
+public sealed interface User permits Manager, Professor, Assistant {
+    public UUID id();
+
+    public String userName();
+
+    public String password();
 }

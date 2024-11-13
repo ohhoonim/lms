@@ -11,5 +11,7 @@ public interface SubjectQuery {
     List<Subject> findSubjectList(Subject subject);
 
     Optional<Subject> findSubjectById(UUID subjectId);
+
+    boolean existsSubject(UUID subjectId);
     
 }
