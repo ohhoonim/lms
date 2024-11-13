@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.ohhoonim.lms.component.hollyday.Hollyday;
+import dev.ohhoonim.lms.domain.learningCourses.model.exception.AlreadyExists;
+import dev.ohhoonim.lms.domain.learningCourses.model.exception.NotExist;
+import dev.ohhoonim.lms.domain.learningCourses.model.exception.NotFound;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.CurriculumCommand;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.CurriculumQuery;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.CurriculumUsecase;

@@ -70,8 +70,11 @@ package model {
     class Syllabus  {
         id: UUID
         syllabusTitle: String
-        lectureMethods : List<LectureMethod>
+        lectureMethods : transient Set<LectureMethod>
         numberOfLectureHours : Integer
+        unitOfLecture : UnitOfLecture
+        representativeProfessor : Professor
+        completed : transient CompletedStatus 
         lectures: List<Lecture>
         
     }
@@ -79,9 +82,12 @@ package model {
         id: UUID
         lectureSequence: Integer
         lectureTitle: String
+        lectureMethod: LectureMethod
+        numberOfLectureHours : Integer
+        evaluationMethod: EvaluationMethod
         lectureContents: String
-        lectureMethod: LectureMethodEnum 
-        lectureMinutes: BigDecimal
+        teacher: Professor
+        assistant : Assistant
         completed: CompletedStatus 
     }
 
@@ -89,7 +95,7 @@ package model {
     class Assistant <User vo>
 
     Curriculum [curriculumRound] "1..*" --- "1..*" Subject : add >
-    Subject -- Syllabus : set >
+    Subject *-- Syllabus : set >
     Syllabus "1" -right- "1..*" Lecture : add >
     RoundLecturePlan .left. Professor
     RoundLecturePlan .left. Assistant
@@ -160,7 +166,7 @@ component hollyday {
 }
 
 component user {
-    class User {
+    interface User {
         id: UUID
         userName: String
         password: String

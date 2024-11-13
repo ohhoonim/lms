@@ -20,12 +20,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.ohhoonim.lms.component.masterCode.LectureMethod;
-import dev.ohhoonim.lms.domain.learningCourses.model.InvalidParameters;
 import dev.ohhoonim.lms.domain.learningCourses.model.Lecture;
-import dev.ohhoonim.lms.domain.learningCourses.model.NotFound;
 import dev.ohhoonim.lms.domain.learningCourses.model.Subject;
 import dev.ohhoonim.lms.domain.learningCourses.model.SubjectService;
 import dev.ohhoonim.lms.domain.learningCourses.model.Syllabus;
+import dev.ohhoonim.lms.domain.learningCourses.model.exception.InvalidParameters;
+import dev.ohhoonim.lms.domain.learningCourses.model.exception.NotFound;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectCommand;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectQuery;
 

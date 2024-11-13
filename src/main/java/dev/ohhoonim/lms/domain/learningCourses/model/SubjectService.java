@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 
 import dev.ohhoonim.lms.component.masterCode.LectureMethod;
 import dev.ohhoonim.lms.component.user.Professor;
+import dev.ohhoonim.lms.domain.learningCourses.model.exception.InvalidParameters;
+import dev.ohhoonim.lms.domain.learningCourses.model.exception.NotFound;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectCommand;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectQuery;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectUsecase;
