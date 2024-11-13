@@ -56,5 +56,11 @@ public class SyllabusFactory implements SyllabusCommand, SyllabusQuery {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findSyllabusLectures'");
     }
+
+    @Override
+    public void saveLecture(Lecture lecture) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'saveLecture'");
+    }
     
 }
