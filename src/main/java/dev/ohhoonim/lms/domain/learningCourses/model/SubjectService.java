@@ -1,49 +1,48 @@
 package dev.ohhoonim.lms.domain.learningCourses.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import dev.ohhoonim.lms.component.masterCode.LectureMethod;
-import dev.ohhoonim.lms.component.user.User.Professor;
+import dev.ohhoonim.lms.component.user.Professor;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectCommand;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectQuery;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.SubjectUsecase;
+import dev.ohhoonim.lms.domain.learningCourses.model.port.SyllabusQuery;
 
 @Service
 public class SubjectService implements SubjectUsecase {
 
     private final SubjectCommand command;
     private final SubjectQuery query;
+    private final SyllabusQuery syllabusQuery;
 
-    public SubjectService(SubjectCommand command, SubjectQuery query) {
+    public SubjectService(SubjectCommand command, SubjectQuery query,
+        SyllabusQuery syllabusQuery) {
         this.command = command;
         this.query = query;
+        this.syllabusQuery = syllabusQuery;
     }
 
     @Override
-    @Transactional
-    public void setSyllabus(Syllabus syllabus) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSyllabus'");
-    }
-
-    @Override
-    public Syllabus getSyllabus(UUID subjectId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSyllabus'");
+    public Syllabus getSyllabusInSubject(UUID subjectId) {
+        Optional<Subject> subject = query.findSubjectById(subjectId);
+        if (subject.isEmpty()) {
+            throw new NotFound("해당 과목이 존재하지 않습니다.");
+        }
+        return subject.get().getSyllabus();
     }
 
     @Override
     public List<Professor> findProfessor(String professorName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findProfessor'");
+        return syllabusQuery.findProfessorList(professorName);
     }
 
     @Override
@@ -53,9 +52,7 @@ public class SubjectService implements SubjectUsecase {
             throw new InvalidParameters("과목명은 필수로 입력해야합니다.");
         }
         List<Subject> result = query.findSubjectList(subject);
-
         return result.stream().map(distinctLectureMethod).toList();
-
     }
 
     private Function<Subject, Subject> distinctLectureMethod = s -> {

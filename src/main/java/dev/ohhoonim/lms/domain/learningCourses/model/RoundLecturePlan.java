@@ -3,8 +3,8 @@ package dev.ohhoonim.lms.domain.learningCourses.model;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import dev.ohhoonim.lms.component.user.User.Assistant;
-import dev.ohhoonim.lms.component.user.User.Professor;
+import dev.ohhoonim.lms.component.user.Assistant;
+import dev.ohhoonim.lms.component.user.Professor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import dev.ohhoonim.lms.component.masterCode.CompletedStatus;
 import dev.ohhoonim.lms.component.masterCode.LectureMethod;
-import dev.ohhoonim.lms.component.user.User.Professor;
+import dev.ohhoonim.lms.component.user.Professor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

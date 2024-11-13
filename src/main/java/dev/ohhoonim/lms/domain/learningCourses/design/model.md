@@ -70,6 +70,8 @@ package model {
     class Syllabus  {
         id: UUID
         syllabusTitle: String
+        lectureMethods : List<LectureMethod>
+        numberOfLectureHours : Integer
         lectures: List<Lecture>
         
     }
@@ -87,8 +89,8 @@ package model {
     class Assistant <User vo>
 
     Curriculum [curriculumRound] "1..*" --- "1..*" Subject : add >
-    Subject -left- Syllabus : set >
-    Syllabus "1" --- "1..*" Lecture : add >
+    Subject -- Syllabus : set >
+    Syllabus "1" -right- "1..*" Lecture : add >
     RoundLecturePlan .left. Professor
     RoundLecturePlan .left. Assistant
 
@@ -105,7 +107,7 @@ package model {
     interface SubjectUsecase {
         setSyllabus(syllabus: Syllabus)
         getCurriculums(subject: Subject) : Curriculum
-        getSyllabus(subject: Subject) : Syllabus
+        getSyllabusInSubject(subjectId: UUID) : List<Syllabus>
         findProfessor(professorName: String): List<Professor>
     }
 
@@ -158,7 +160,11 @@ component hollyday {
 }
 
 component user {
-    class User
+    class User {
+        id: UUID
+        userName: String
+        password: String
+    }
 }
 
 model -> masterCode

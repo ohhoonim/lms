@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import dev.ohhoonim.lms.component.masterCode.LectureMethod;
 import dev.ohhoonim.lms.domain.learningCourses.model.InvalidParameters;
 import dev.ohhoonim.lms.domain.learningCourses.model.Lecture;
+import dev.ohhoonim.lms.domain.learningCourses.model.NotFound;
 import dev.ohhoonim.lms.domain.learningCourses.model.Subject;
 import dev.ohhoonim.lms.domain.learningCourses.model.SubjectService;
 import dev.ohhoonim.lms.domain.learningCourses.model.Syllabus;
@@ -55,12 +57,11 @@ public class SubjectServiceTest {
     public void findSubjectList() {
         // given
         List<Lecture> lectures = List.of(
-            Lecture.builder().lectureMethod(LectureMethod.BOTH).build(),
-            Lecture.builder().lectureMethod(LectureMethod.ON_LINE).build(),
-            Lecture.builder().build()
-        );
+                Lecture.builder().lectureMethod(LectureMethod.BOTH).build(),
+                Lecture.builder().lectureMethod(LectureMethod.ON_LINE).build(),
+                Lecture.builder().build());
         var syllabus = Syllabus.builder()
-                .id(UUID.randomUUID()) 
+                .id(UUID.randomUUID())
                 .syllabusTitle("수항2학년")
                 .lectures(lectures)
                 .build();
@@ -76,7 +77,7 @@ public class SubjectServiceTest {
 
         // then
         List<Subject> result = service.findSubjectList(paramsSubject);
-        // lectureMethods는 도메인에서 계산 처리한다. 
+        // lectureMethods는 도메인에서 계산 처리한다.
         assertEquals(2, result.get(0).getLectureMethods().size());
         // assertNull(result.get(0).getSyllabus());
         verify(query, times(1)).findSubjectList(any());
@@ -87,7 +88,7 @@ public class SubjectServiceTest {
     public void findSubjectListNoSyllabus() {
         // given
         var syllabus = Syllabus.builder()
-                .id(UUID.randomUUID()) 
+                .id(UUID.randomUUID())
                 .syllabusTitle("수항2학년")
                 .lectures(null)
                 .build();
@@ -112,5 +113,43 @@ public class SubjectServiceTest {
     public void saveSubject() {
         service.saveSubject(Subject.builder().build());
         verify(command).saveSubject(any());
-    } 
+    }
+
+    @Test
+    @DisplayName("과목별 강의계획서 찾기")
+    public void getSyllabusInSubject() {
+        // given
+        var subjectId = UUID.randomUUID();
+
+        // when
+        when(query.findSubjectById(any())).thenReturn(Optional.empty());
+
+        // then
+        assertThrowsExactly(NotFound.class, () -> 
+            service.getSyllabusInSubject(subjectId) 
+        );
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

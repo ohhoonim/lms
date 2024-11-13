@@ -2,7 +2,7 @@ package dev.ohhoonim.lms.domain.learningCourses.model;
 
 import java.util.List;
 
-import dev.ohhoonim.lms.component.user.User.Manager;
+import dev.ohhoonim.lms.component.user.Manager;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

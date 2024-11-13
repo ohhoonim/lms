@@ -52,7 +52,7 @@ public class CurriculumService implements CurriculumUsecase {
     @Override
     public List<Subject> findSubject(Subject subject, Long curriculumId) {
         if (curriculumId == null || curriculumId == 0L) {
-            throw new NotFoundCurriculum("curiculum id는 필수입니다.");
+            throw new NotFound("curiculum id는 필수입니다.");
         }
 
         return query.findSubjectsInCurriculum(subject, curriculumId);
@@ -122,10 +122,10 @@ public class CurriculumService implements CurriculumUsecase {
     }
 
     @Override
-    public Curriculum findCurriculum(Long curriculumId) throws NotFoundCurriculum {
+    public Curriculum findCurriculum(Long curriculumId) throws NotFound {
         Optional<Curriculum> curriculum = query.findCurriculum(curriculumId);
         if (curriculum.isEmpty()) {
-            throw new NotFoundCurriculum(curriculumId + "에 대한 커리큘럼이 존재하지 않습니다.");
+            throw new NotFound(curriculumId + "에 대한 커리큘럼이 존재하지 않습니다.");
         }
         return curriculum.get();
     }

@@ -25,7 +25,7 @@ import dev.ohhoonim.lms.domain.learningCourses.model.Curriculum;
 import dev.ohhoonim.lms.domain.learningCourses.model.CurriculumRound;
 import dev.ohhoonim.lms.domain.learningCourses.model.CurriculumService;
 import dev.ohhoonim.lms.domain.learningCourses.model.NotExist;
-import dev.ohhoonim.lms.domain.learningCourses.model.NotFoundCurriculum;
+import dev.ohhoonim.lms.domain.learningCourses.model.NotFound;
 import dev.ohhoonim.lms.domain.learningCourses.model.Subject;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.CurriculumCommand;
 import dev.ohhoonim.lms.domain.learningCourses.model.port.CurriculumQuery;
@@ -161,7 +161,7 @@ public class CurriculumServiceTest {
 		when(query.findCurriculum(any())).thenReturn(Optional.empty());
 
 		// 없으면 Exception
-		assertThrowsExactly(NotFoundCurriculum.class,
+		assertThrowsExactly(NotFound.class,
 				() -> service.findCurriculum(1L));
 	}
 
@@ -208,7 +208,7 @@ public class CurriculumServiceTest {
 		var paramSubject = Subject.builder().build();
 
 		// then
-		assertThrowsExactly(NotFoundCurriculum.class, () -> service.findSubject(paramSubject, curriculumId));
+		assertThrowsExactly(NotFound.class, () -> service.findSubject(paramSubject, curriculumId));
 	}
 
 	@Test

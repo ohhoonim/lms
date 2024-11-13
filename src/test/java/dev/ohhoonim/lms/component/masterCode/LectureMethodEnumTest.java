@@ -8,7 +8,7 @@ public class LectureMethodEnumTest {
 
     @Test
     public void getLangCodeTest() {
-        assertEquals("both", LectureMethod.BOTH.langCode());
+        assertEquals("master-code.lecture-method.both", LectureMethod.BOTH.langCode());
     }
 
     @Test
