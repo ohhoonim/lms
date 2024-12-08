@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.component.masterCode;
+package dev.ohhoonim.component.masterCode;
 
 public enum EvaluationMethod implements MasterCode {
     MID_TERM("EVM001", "master-code.evaluation-method.mid-term"),

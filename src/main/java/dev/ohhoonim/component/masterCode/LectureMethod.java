@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.component.masterCode;
+package dev.ohhoonim.component.masterCode;
 
 public enum LectureMethod implements MasterCode {
     ON_LINE("LME001", "master-code.lecture-method.online"),

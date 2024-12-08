@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.component.masterCode;
+package dev.ohhoonim.component.masterCode;
 
 public enum UnitOfLecture implements MasterCode {
     HOUR("EVM001", "master-code.unit-of-lecture.hour"),

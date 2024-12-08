@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.configuration;
+package dev.ohhoonim.configuration;
 
 import javax.sql.DataSource;
 

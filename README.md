@@ -6,6 +6,8 @@
 
 ```plantuml
 @startuml
+skinparam monochrome reverse
+skinparam shadowing true
 left to right direction
 :교수자: as professor
 :관리자: as manager
@@ -24,6 +26,8 @@ manager -up-> req_o
 
 ```plantuml
 @startuml
+skinparam monochrome reverse
+skinparam shadowing true
 left to right direction
 :학습자: as student
 :교수자: as professor
@@ -56,6 +60,8 @@ req_g --> pg
 
 ```plantuml
 @startuml
+skinparam monochrome reverse
+skinparam shadowing true
 left to right direction
 :교수자: as professor
 :학습자: as student
@@ -83,6 +89,8 @@ student -up-> req_s
 
 ```plantuml
 @startuml
+skinparam monochrome reverse
+skinparam shadowing true
 left to right direction
 :교수자: as professor
 :학습자: as student
@@ -110,6 +118,8 @@ manager -up-> req_p
 
 ```plantuml
 @startuml
+skinparam monochrome reverse
+skinparam shadowing true
 left to right direction
 :교수자: as professor
 :학습자: as student
@@ -135,6 +145,8 @@ manager --> req_b
 
 ```plantuml
 @startuml
+skinparam monochrome reverse
+skinparam shadowing true
 left to right direction
 component components {
     [메뉴관리] <<REQ-NF1>>
@@ -171,74 +183,77 @@ component components {
 
 ```plantuml
 @startuml
+skinparam monochrome reverse
+skinparam shadowing true
 left to right direction
-frame "domain" {
-    [학습과정] as learningCourse
-    [수강] as takingClass
-    component learningProgress as "학습진도" #palegreen;line:green; {
-        package model {
-            portin usecase
-            portout query
-            portout command
-            component ServiceImpl 
-        }
-        package service {
-            component factory
-            component api
-        }
-        package event_messaaging as "messaging"{
-            component endpoint as "엔드포인트"
-        }
-        port event_object as "메시지 객체"
-    }
-    [평가] as evaluation
-    [시스템] as system
-}
-
-frame component {
-    [NF컴포넌트] as components
-}
-
-frame dao {
-    interface repository
-    package table
-}
-
-database PostgreSQL as postgresql
-
-frame messaaging_system as "메시지 시스템" {
-    queue rabbitmq
-}
 
 interface http
 
-api ..> usecase
-ServiceImpl ..|> usecase
-ServiceImpl ..> query
-ServiceImpl ..> command
-http -> api #line:red;line.bold;text:red; : rest
-command <|.. factory
-query <|.. factory
-factory -> repository #line:red;line.bold;text:red; : adapter
-factory ..> endpoint : event
-event_object ..> messaaging_system #line:red;text:red; : producer 
-messaaging_system ..> ServiceImpl #line:red;text:red; : consumer
-endpoint .. event_object : use
+package repository {
+    rectangle Repository
+}
 
-learningCourse ..> repository
-takingClass ..> repository
-evaluation ..> repository
-system ..> repository
-components ..> repository
-repository ..> postgresql
-repository .[dotted].> table : use
+package table {
+    rectangle Table
+}
+
+Repository -left-> Table
+
+package component {
+    rectangle Component
+}
+
+package domain {
+
+    package concreteDomain {
+        rectangle Record 
+
+        package service {
+            rectangle Api
+            rectangle Factory
+            rectangle Endpoint
+
+            package model {
+                portin Usecase
+                portout Query
+                portout Command
+
+                rectangle Entity 
+                rectangle Service 
+            }
+        }
+
+        http --> Api: request
+        http <.. Api: response
+        Api ..> Usecase
+
+        Usecase <|-- Service
+        Service ..> Command
+        Service ..> Query
+        Service -left-> Entity
+
+        Command <|-- Factory
+        Query <|-- Factory
+    }
+}
+
+service .up.> Component : use
+Factory  ..> Repository : table record
+Factory <.. Repository : domain entity
 
 
-messaaging_system -[dotted]- learningCourse
-messaaging_system -[dotted]- takingClass
-messaaging_system -[dotted]- evaluation
-messaaging_system -[dotted]- system
-messaaging_system -[dotted]- components
-
+note bottom of concreteDomain
+- 'concreteDomain' 패키지의 root에 위치한 
+클래스들만 외부 도메인 모듈에서 접근 가능하다. 
+- 노출할 entity record, event record 등
+endnote
+note right of Endpoint 
+메시징 시스템을 사용할 때 
+이벤트 설정 클래스이다
+endnote
+note bottom of Repository
+table entity와 domain record는
+경계이동시 변환해준다 
+endnote
 @enduml
 ```

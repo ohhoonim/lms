@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.component.masterCode;
+package dev.ohhoonim.component.masterCode;
 
 public enum CompletedStatus implements MasterCode {
     Working("CPL001", "master-code.completed-status.working"),
