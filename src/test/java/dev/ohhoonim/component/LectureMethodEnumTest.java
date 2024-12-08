@@ -1,8 +1,11 @@
-package dev.ohhoonim.lms.component.masterCode;
+package dev.ohhoonim.component;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.Test;
+
+import dev.ohhoonim.component.masterCode.LectureMethod;
+import dev.ohhoonim.component.masterCode.MasterCode;
 
 public class LectureMethodEnumTest {
 

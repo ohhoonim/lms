@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.component.hollyday;
+package dev.ohhoonim.component.hollyday;
 
 public sealed interface Hollyday {
     public final class PublicHollyday implements Hollyday{}

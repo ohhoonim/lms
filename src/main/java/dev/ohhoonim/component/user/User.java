@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.component.user;
+package dev.ohhoonim.component.user;
 
 import java.util.UUID;
 

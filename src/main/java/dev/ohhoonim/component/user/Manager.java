@@ -1,8 +1,8 @@
-package dev.ohhoonim.lms.component.user;
+package dev.ohhoonim.component.user;
 
 import java.util.UUID;
 
-public record Professor(
+public record Manager(
         UUID id,
         String userName,
         String password) implements User {

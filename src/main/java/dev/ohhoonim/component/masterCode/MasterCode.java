@@ -1,4 +1,4 @@
-package dev.ohhoonim.lms.component.masterCode;
+package dev.ohhoonim.component.masterCode;
 
 import java.util.List;
 
