@@ -1,3 +1,4 @@
+@org.springframework.modulith.NamedInterface("masterCode")
 package dev.ohhoonim.component.masterCode;
 
 /**

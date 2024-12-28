@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestControllerAdvice(basePackages = "dev.ohhoonim")
 public class DefaultResponseHandler implements ResponseBodyAdvice<Object> {
 
+    @SuppressWarnings("null")
     @Override
     public boolean supports(MethodParameter returnType,
             Class<? extends HttpMessageConverter<?>> converterType) {
@@ -44,6 +45,7 @@ public class DefaultResponseHandler implements ResponseBodyAdvice<Object> {
     @Autowired
     ObjectMapper objectMapper;
 
+    @SuppressWarnings("null")
     @Override
     public Object beforeBodyWrite(Object body,
             MethodParameter returnType,

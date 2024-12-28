@@ -1,5 +1,5 @@
 @org.springframework.modulith.ApplicationModule(allowedDependencies = {"component::user", 
-    "component::masterCode","component::changedHistory", "component::annotations"})
+    "component::masterCode","component::changedHistory" })
 package dev.ohhoonim.lms;
 
 /**
