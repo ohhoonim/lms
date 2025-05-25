@@ -10,10 +10,12 @@ public interface MasterCode {
 
     public String langCode();
 
-    public static<E extends MasterCode> E enumCode(Class<E> enumCode, String masterCode) {
+    public static <E extends MasterCode> E enumCode(
+            Class<E> enumCode,
+            String masterCode) {
         return List.of(enumCode.getEnumConstants()).stream()
-                    .filter(constant -> masterCode.equals(constant.masterCode()))
-                    .findFirst()
-                    .orElse(null);
+                .filter(constant -> masterCode.equals(constant.masterCode()))
+                .findFirst()
+                .orElse(null);
     }
 }
