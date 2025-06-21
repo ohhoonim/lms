@@ -3,7 +3,8 @@ package dev.ohhoonim.component.signJwt;
 import java.util.Date;
 import java.util.List;
 
-interface BearerTokenUsecase {
+public interface BearerTokenUsecase {
+
     String generateAccessToken(String userName, List<Authority> authorities);
 
     String getUsername(String refreshToken);

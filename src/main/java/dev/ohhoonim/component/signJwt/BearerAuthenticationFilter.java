@@ -12,22 +12,21 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Component
+
 public class BearerAuthenticationFilter extends OncePerRequestFilter {
 
     private final BearerTokenUsecase bearerTokenService;
     private final AuthorityPort authorityPort;
 
     public BearerAuthenticationFilter(BearerTokenUsecase bearerTokenService,
-            AuthorityPort authorityPort
-    ) {
+            AuthorityPort authorityPort) {
         this.bearerTokenService = bearerTokenService;
         this.authorityPort = authorityPort;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
-                HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request,
+            HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         var token = extractToken(request);
 
