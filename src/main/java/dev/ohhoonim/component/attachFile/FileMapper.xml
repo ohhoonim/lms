@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.elonsoft.structurerole.system.mapper.FileMapper">
+<mapper namespace="dev.ohhoonim.component.attachFile.FileMapper">
 
     <insert id="insertAttachFile" parameterType="map">
         /* FileMapper - insertAttachFile */
@@ -23,7 +23,7 @@
         , #{session.userId} )
     </insert>
 
-    <select id="selectAttachFile" parameterType="string" resultType="attachFile">
+    <select id="selectAttachFile" parameterType="string" resultType="dev.ohhoonim.component.attachFile.AttachFile">
         /* FileMapper - selectAttachFile */
         SELECT ID                  AS id
         , NAME                AS name
@@ -48,7 +48,7 @@
         WHERE ATTACH_FILE_ID = #{fileId}
     </delete>
 
-    <select id="selectAttachFiles" parameterType="string" resultType="attachFile">
+    <select id="selectAttachFiles" parameterType="string" resultType="dev.ohhoonim.component.attachFile.AttachFile">
         /* FileMapper - selectAttachFiles */
         SELECT AF.ID                  AS id
              , AF.NAME                AS name
