@@ -49,7 +49,7 @@ public class AttachFileService {
      */
     @Transactional
     public List<AttachFile> uploadFiles(List<MultipartFile> files, String uploadFilePath) {
-        if (StringUtils.hasText(uploadFilePath)) {
+        if (!StringUtils.hasText(uploadFilePath)) {
             throw new NullPointerException(
                     "empty upload path. check property in application.yml [constants.file.upload-path]");
         }

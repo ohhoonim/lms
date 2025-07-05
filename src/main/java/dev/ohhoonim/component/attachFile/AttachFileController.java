@@ -40,7 +40,7 @@ public class AttachFileController {
         this.attachFileService = attachFileService;
     }
 
-    @Value("${constants.file.upload-path}")
+    @Value("${attachFile.upload-path}")
     private String uploadPath;
 
     /**
@@ -85,7 +85,6 @@ public class AttachFileController {
      */
     @GetMapping("/download-zip")
     public ResponseEntity<Resource> zipDownload(@RequestParam(name = "fileIds") List<String> fileIds) throws IOException {
-        // 임시 ZIP 파일 생성
         String zipFileName = "files.zip";
         Path zipFilePath = null;
         long contentLength = 0;
@@ -126,9 +125,7 @@ public class AttachFileController {
             }
             throw new RuntimeException("Failed to create ZIP file: " + zipFilePath, e);
         } finally {
-            // 파일 생성에 성공한 후에도 임시 파일 resource 해제
             if (zipFilePath != null) {
-                // 임시 파일 자원 해제 과정에서 에러 발생시 GlobalExceptionHandler로 전파.
                 Files.deleteIfExists(zipFilePath);
             }
         }

@@ -20,7 +20,7 @@
         , #{file.capacity}
         , #{file.extension}
         , SYSTIMESTAMP
-        , #{account.userId} )
+        , #{session.userId} )
     </insert>
 
     <select id="selectAttachFile" parameterType="string" resultType="attachFile">

@@ -107,4 +107,26 @@ create table if not exists lms_course_subject(
    constraint pk_lms_course_subject primary key (course_id, subject_syllabus_id),
    constraint fk_lms_course_subject_subject_syllabus foreign key (subject_syllabus_id) references lms_subject_syllabus(subject_syllabus_id)
 );
-----------------------------------------------------------------------------
+
+
+create table if not exists component_attach_file (
+   id char(26),
+   name varchar(1000),
+   path varchar(2000),
+   capacity bigint,
+   extension varchar(16),
+   created timestamp,
+   creator varchar(36),
+   constraint pk_component_attach_file primary key (id)
+);
+
+create table if not exists component_attach_file_group (
+   id char(26),
+   entity_id char(26),
+   file_id char(26),
+   created timestamp,
+   creator varchar(36)
+
+   constraint pk_component_attach_file_group primary key (id),
+   constraint fk_component_attach_file_group_file_id foreign key (file_id) references component_attach_file(id)
+);
