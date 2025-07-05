@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "attachFile.upload-path",
+    "type": "java.lang.String",
+    "description": "A description for 'attachFile.upload-path'"
+  },
+  {
+    "name": "attachFile.max-attach-files",
+    "type": "java.lang.String",
+    "description": "A description for 'attachFile.max-attach-files'"
+  }
+]}
