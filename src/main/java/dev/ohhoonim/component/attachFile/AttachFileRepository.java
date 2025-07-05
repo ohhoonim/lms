@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * 파일 데이터 처리 Mapper
  */
-@Repository
+// @Repository
 public interface AttachFileRepository {
 
     /**

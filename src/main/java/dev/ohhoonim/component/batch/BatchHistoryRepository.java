@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
  * 배치 이력 조회 Repository 
  * 스키마는 spring batch의 것을 가져옴
  */
-@Repository
+// @Repository
 public interface BatchHistoryRepository {
 
     /**

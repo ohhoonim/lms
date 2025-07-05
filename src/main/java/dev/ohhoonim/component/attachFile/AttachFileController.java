@@ -31,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 파일 처리 API 
  */
-@RestController
+// @RestController
 @RequestMapping("/api/attachFile")
 public class AttachFileController {
     private final AttachFileService attachFileService;
