@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.ohhoonim.component.response.Response;
 import dev.ohhoonim.component.response.ResponseCode;
 
-@ComponentScan(basePackages = {"dev.ohhoonim.component"})
 @WebMvcTest(controllers = DefaultResponseApi.class)
 public class ResponseTest {
 

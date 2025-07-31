@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.ohhoonim.component.attachFile.AttachFileMapper">
+    <insert id="insertAttachFile">
+        insert into component_attach_file
+        ( id
+        , "name"
+        , "path"
+        , capacity
+        , "extension"
+        , created
+        , creator 
+        ) values
+        ( #{file.id}
+        , #{file.name}
+        , #{file.path}
+        , #{file.capacity}
+        , #{file.extension}
+        , now() 
+        , #{file.creator.creator} 
+        )
+    </insert>
+
+    <resultMap id="created" type="created">
+        <result property="id" column="id"/>
+        <result property="created" column="created"/>
+        <result property="creator" column="creator"/>
+    </resultMap>
+    <resultMap id="modified" type="modified">
+        <result property="id" column="id"/>
+        <result property="modified" column="modified"/>
+        <result property="modifier" column="modifier"/>
+    </resultMap>
+
+    <resultMap id="attachFile" type="attachFile">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="path" column="path"/>
+        <result property="capacity" column="capacity"/>
+        <result property="extension" column="extension"/>
+        <association property="creator" resultMap="created"/>
+        <association property="modifier" resultMap="modified"/>
+    </resultMap>
+
+    <select id="selectAttachFile" resultMap="attachFile">
+        select id
+        , name
+        , path
+        , capacity
+        , extension           
+        , created
+        , creator
+        , modified 
+        , modifier 
+        from component_attach_file
+        where ID = #{id}
+    </select>
+
+    <delete id="deleteAttachFile">
+        delete
+        from component_attach_file
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteAttachFileGroupByFileId">
+        delete
+        from component_attach_file_group
+        where file_id = #{id}
+    </delete>
+
+    <select id="selectAttachFiles" resultType="attachFile">
+        select af.id
+        , af.name
+        , af.path
+        , af.capacity
+        , af.extension
+          from component_attach_file af
+         inner join component_attach_file_group afg
+            on af.id = afg.file_id
+         where afg.entity_id = #{entityId}
+    </select>
+
+    <insert id="insertAttachFileGroup">
+        insert
+        into component_attach_file_group
+        ( id
+        , entity_id
+        , file_id
+        , created
+        , creator
+        ) values 
+        ( #{group.id}
+        , #{group.entityId}
+        , #{group.fileId.id}
+        , now()
+        , #{group.creator.creator}
+        )
+    </insert>
+
+    <delete id="deleteAttachFileGroupByEntityId">
+        delete
+        from component_attach_file_group
+        where entity_id = #{entityId}
+    </delete>
+</mapper>

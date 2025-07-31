@@ -1,20 +1,24 @@
 package dev.ohhoonim.component.attachFile;
 
-import dev.ohhoonim.component.id.Id;
 import java.time.LocalDateTime;
 
-public record AttachFile(
-    Id id,
-    String name,
-    String path,
-    Long capacity,
-    String extension,
-    LocalDateTime created,
-    String creator
-) {
+import dev.ohhoonim.component.dataBy.DataBy;
+import dev.ohhoonim.component.id.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public AttachFile(Id id, String baseName, String uploadFilePath, long size, String extension) {
-        this(id, baseName, uploadFilePath, size, extension, null, "system");
-    }
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AttachFile {
+    private Id id;
+    private String name;
+    private String path;
+    private Long capacity;
+    private String extension;
+    private DataBy creator;
+    private DataBy modifier;
 }

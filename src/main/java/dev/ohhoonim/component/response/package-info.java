@@ -13,4 +13,5 @@
  * @version 1.0.0
  * 
  */
+@org.springframework.modulith.NamedInterface("response")
 package dev.ohhoonim.component.response;
