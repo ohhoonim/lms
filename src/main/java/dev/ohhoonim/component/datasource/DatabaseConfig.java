@@ -1,4 +1,4 @@
-package dev.ohhoonim.configuration;
+package dev.ohhoonim.component.datasource;
 
 import javax.sql.DataSource;
 
@@ -7,27 +7,27 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-public class Database {
-    
+@EnableTransactionManagement
+public class DatabaseConfig {
     @Bean
     @ConfigurationProperties("spring.datasource.hikari")
-    public HikariConfig hikariConfig() {
+    HikariConfig hikariConfig() {
         return new HikariConfig();
-    } 
+    }
 
-    @Bean 
-    public DataSource datasource() {
+    @Bean
+    DataSource datasource() {
         return new HikariDataSource(hikariConfig());
     }
 
-     @Bean
+    @Bean
     TransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }
- 

@@ -1,15 +1,21 @@
 package dev.ohhoonim.component.attachFile;
 
-import java.time.LocalDateTime;
-
+import dev.ohhoonim.component.dataBy.DataBy;
 import dev.ohhoonim.component.id.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record AttachFileGroup(
-    Id id,
-    Id entityId,
-    Id fileId,
-    LocalDateTime created,
-    String creator
-) {
-    
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AttachFileGroup {
+
+    private Id id;
+    private Id entityId;
+    private AttachFile fileId;
+    private DataBy creator;
+    private DataBy modifier;
 }
