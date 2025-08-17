@@ -1,5 +1,5 @@
 @org.springframework.modulith.NamedInterface("handler")
-package dev.ohhoonim.component.handler;
+package dev.ohhoonim.component.datasource.handler;
 
 /**
  * handler
