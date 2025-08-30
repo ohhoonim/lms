@@ -135,95 +135,127 @@ create table if not exists component_attach_file_group (
 );
 -- component attach_file <end>
 
--- spring batch schema <start>
-/*
-DROP TABLE  IF EXISTS BATCH_STEP_EXECUTION_CONTEXT;
-DROP TABLE  IF EXISTS BATCH_JOB_EXECUTION_CONTEXT;
-DROP TABLE  IF EXISTS BATCH_STEP_EXECUTION;
-DROP TABLE  IF EXISTS BATCH_JOB_EXECUTION_PARAMS;
-DROP TABLE  IF EXISTS BATCH_JOB_EXECUTION;
-DROP TABLE  IF EXISTS BATCH_JOB_INSTANCE;
 
-DROP SEQUENCE  IF EXISTS BATCH_STEP_EXECUTION_SEQ;
-DROP SEQUENCE  IF EXISTS BATCH_JOB_EXECUTION_SEQ;
-DROP SEQUENCE  IF EXISTS BATCH_JOB_SEQ;
-*/
+create table if not exists component_changed_event (
+    id varchar(26),
+    entity_type varchar(255),
+    entity_id varchar(26),
+    creator varchar(26),
+    created timestamp,
+    json_data jsonb,
+    constraint pk_component_changed_event primary key (id)
+);
 
-CREATE SEQUENCE if not exists BATCH_STEP_EXECUTION_SEQ MAXVALUE 9223372036854775807 NO CYCLE;
-CREATE SEQUENCE if not exists BATCH_JOB_EXECUTION_SEQ MAXVALUE 9223372036854775807 NO CYCLE;
-CREATE SEQUENCE if not exists BATCH_JOB_SEQ MAXVALUE 9223372036854775807 NO CYCLE;
+comment on table component_changed_event is '변경이력';
+comment on column component_changed_event.entity_type is '엔티티 타입';
+comment on column component_changed_event.entity_id is '엔티티 id';
+comment on column component_changed_event.creator is 'creator';
+comment on column component_changed_event.created is 'created';
+comment on column component_changed_event.json_data is 'json_data';
 
-CREATE TABLE if not exists BATCH_JOB_INSTANCE  (
-	JOB_INSTANCE_ID BIGINT  NOT NULL PRIMARY KEY ,
-	VERSION BIGINT ,
-	JOB_NAME VARCHAR(100) NOT NULL,
-	JOB_KEY VARCHAR(32) NOT NULL,
-	constraint JOB_INST_UN unique (JOB_NAME, JOB_KEY)
-) ;
 
-CREATE TABLE if not exists BATCH_JOB_EXECUTION  (
-	JOB_EXECUTION_ID BIGINT  NOT NULL PRIMARY KEY ,
-	VERSION BIGINT  ,
-	JOB_INSTANCE_ID BIGINT NOT NULL,
-	CREATE_TIME TIMESTAMP NOT NULL,
-	START_TIME TIMESTAMP DEFAULT NULL ,
-	END_TIME TIMESTAMP DEFAULT NULL ,
-	STATUS VARCHAR(10) ,
-	EXIT_CODE VARCHAR(2500) ,
-	EXIT_MESSAGE VARCHAR(2500) ,
-	LAST_UPDATED TIMESTAMP,
-	constraint JOB_INST_EXEC_FK foreign key (JOB_INSTANCE_ID)
-	references BATCH_JOB_INSTANCE(JOB_INSTANCE_ID)
-) ;
+-- domain para
 
-CREATE TABLE if not exists BATCH_JOB_EXECUTION_PARAMS  (
-	JOB_EXECUTION_ID BIGINT NOT NULL ,
-	PARAMETER_NAME VARCHAR(100) NOT NULL ,
-	PARAMETER_TYPE VARCHAR(100) NOT NULL ,
-	PARAMETER_VALUE VARCHAR(2500) ,
-	IDENTIFYING CHAR(1) NOT NULL ,
-	constraint JOB_EXEC_PARAMS_FK foreign key (JOB_EXECUTION_ID)
-	references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
-) ;
 
-CREATE TABLE if not exists BATCH_STEP_EXECUTION  (
-	STEP_EXECUTION_ID BIGINT  NOT NULL PRIMARY KEY ,
-	VERSION BIGINT NOT NULL,
-	STEP_NAME VARCHAR(100) NOT NULL,
-	JOB_EXECUTION_ID BIGINT NOT NULL,
-	CREATE_TIME TIMESTAMP NOT NULL,
-	START_TIME TIMESTAMP DEFAULT NULL ,
-	END_TIME TIMESTAMP DEFAULT NULL ,
-	STATUS VARCHAR(10) ,
-	COMMIT_COUNT BIGINT ,
-	READ_COUNT BIGINT ,
-	FILTER_COUNT BIGINT ,
-	WRITE_COUNT BIGINT ,
-	READ_SKIP_COUNT BIGINT ,
-	WRITE_SKIP_COUNT BIGINT ,
-	PROCESS_SKIP_COUNT BIGINT ,
-	ROLLBACK_COUNT BIGINT ,
-	EXIT_CODE VARCHAR(2500) ,
-	EXIT_MESSAGE VARCHAR(2500) ,
-	LAST_UPDATED TIMESTAMP,
-	constraint JOB_EXEC_STEP_FK foreign key (JOB_EXECUTION_ID)
-	references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
-) ;
+create table if not exists para_tag (
+    tag_id varchar(26),
+    tag varchar(255),
+    creator varchar(26),
+    creaated timestamp,
+    modifier varchar(26),
+    modified timestamp,
+    constraint pk_para_tag primary key (tag_id)
+);
 
-CREATE TABLE if not exists BATCH_STEP_EXECUTION_CONTEXT  (
-	STEP_EXECUTION_ID BIGINT NOT NULL PRIMARY KEY,
-	SHORT_CONTEXT VARCHAR(2500) NOT NULL,
-	SERIALIZED_CONTEXT TEXT ,
-	constraint STEP_EXEC_CTX_FK foreign key (STEP_EXECUTION_ID)
-	references BATCH_STEP_EXECUTION(STEP_EXECUTION_ID)
-) ;
+create table if not exists para_note (
+    note_id varchar(26) not null,
+    title varchar(255),
+    creator varchar(26),
+    creaated timestamp,
+    modifier varchar(26),
+    modified timestamp,
+    content text,
+    constraint pk_para_note primary key (note_id)
+);
 
-CREATE TABLE if not exists BATCH_JOB_EXECUTION_CONTEXT  (
-	JOB_EXECUTION_ID BIGINT NOT NULL PRIMARY KEY,
-	SHORT_CONTEXT VARCHAR(2500) NOT NULL,
-	SERIALIZED_CONTEXT TEXT ,
-	constraint JOB_EXEC_CTX_FK foreign key (JOB_EXECUTION_ID)
-	references BATCH_JOB_EXECUTION(JOB_EXECUTION_ID)
-) ;
+comment on table para_note is '노트';
+comment on column para_note.note_id is 'id';
+comment on column para_note.title is '제목';
+comment on column para_note.content is '노트 내용';
 
--- spring batch schema <end>
+
+create table if not exists para_note_tag (
+    note_id varchar(26) not null,
+    tag_id varchar(26) not null,
+    creator varchar(26),
+    creaated timestamp,
+    modifier varchar(26),
+    modified timestamp,
+    constraint pk_para_note_tag primary key (note_id, tag_id),
+    constraint fk_para_note_tag_note_id foreign key (note_id) references para_note(note_id),
+    constraint fk_para_note_tag_tag_id foreign key( tag_id) references para_tag(tag_id)
+);
+
+create table if not exists para_project (
+    project_id varchar(26) not null,
+    title varchar(255),
+    content text,
+    start_date timestamp,
+    end_date timestamp,
+    status varchar(10), /* backlog, ready, inprogress, done */
+    creator varchar(26),
+    creaated timestamp,
+    modifier varchar(26),
+    modified timestamp,
+    constraint pk_para_project primary key (project_id)
+);
+
+comment on table para_project is 'para Project';
+comment on column para_project.project_id is 'id';
+comment on column para_project.title is '프로젝트명';
+comment on column para_project.content is '프로젝트 내용';
+comment on column para_project.start_date is '시작일';
+comment on column para_project.end_date is '종료일';
+comment on column para_project.status is '진행항태. backlog,ready, inprogress, done';
+
+create table if not exists para_project_note (
+    project_id varchar(26) not null,
+    note_id varchar(26) not null,
+    creator varchar(26),
+    creaated timestamp,
+    modifier varchar(26),
+    modified timestamp,
+    constraint pk_para_project_note primary key (project_id, note_id),
+    constraint fk_para_project_note_project_id foreign key (project_id) references para_project(project_id),
+    constraint fk_para_project_note_note_id foreign key (note_id) references para_note(note_id)
+);
+
+create table if not exists para_shelf (
+    shelf_id varchar(26) not null,
+    shape varchar(10) not null, /* area, resource, archive */
+    title varchar(255),
+    content text,
+    creator varchar(26),
+    creaated timestamp,
+    modifier varchar(26),
+    modified timestamp,
+    constraint pk_para_shelf primary key (shelf_id)
+);
+
+comment on table para_shelf is 'area resource archive';
+comment on column para_shelf.shelf_id is 'id';
+comment on column para_shelf.shape is '구분. area, resource, archive';
+comment on column para_shelf.title is '제목';
+comment on column para_shelf.content is '내용';
+
+create table if not exists para_shelf_note (
+    shelf_id varchar(26) not null,
+    note_id varchar(26) not null,
+    creator varchar(26),
+    creaated timestamp,
+    modifier varchar(26),
+    modified timestamp,
+    constraint pk_para_shelf_note primary key (shelf_id, note_id),
+    constraint fk_para_shelf_note_shelf_id foreign key (shelf_id) references para_shelf(shelf_id),
+    constraint fk_para_shelf_note_note_id foreign key (note_id) references para_note(note_id)
+);

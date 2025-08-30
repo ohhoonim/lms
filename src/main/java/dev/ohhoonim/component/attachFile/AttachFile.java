@@ -1,9 +1,7 @@
 package dev.ohhoonim.component.attachFile;
 
-import java.time.LocalDateTime;
-
-import dev.ohhoonim.component.dataBy.DataBy;
-import dev.ohhoonim.component.id.Id;
+import dev.ohhoonim.component.auditing.dataBy.DataBy;
+import dev.ohhoonim.component.auditing.dataBy.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

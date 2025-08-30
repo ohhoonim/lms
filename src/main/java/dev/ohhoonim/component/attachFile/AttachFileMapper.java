@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import dev.ohhoonim.component.id.Id;
+import dev.ohhoonim.component.auditing.dataBy.Id;
 
 @Mapper
 public interface AttachFileMapper {
