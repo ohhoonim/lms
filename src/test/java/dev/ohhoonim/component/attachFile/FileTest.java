@@ -20,7 +20,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.ohhoonim.component.id.Id;
+import dev.ohhoonim.component.auditing.dataBy.Id;
 import jakarta.servlet.http.Part;
 
 /**

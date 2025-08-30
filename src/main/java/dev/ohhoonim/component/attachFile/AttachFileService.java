@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.ohhoonim.component.dataBy.Created;
-import dev.ohhoonim.component.dataBy.Modified;
-import dev.ohhoonim.component.id.Id;
+import dev.ohhoonim.component.auditing.dataBy.Created;
+import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.dataBy.Modified;
 import lombok.extern.slf4j.Slf4j;
 
 /**

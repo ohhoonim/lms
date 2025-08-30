@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.ohhoonim.component.id.Id;
+import dev.ohhoonim.component.auditing.dataBy.Id;
 
 /**
  * 파일 처리 API 

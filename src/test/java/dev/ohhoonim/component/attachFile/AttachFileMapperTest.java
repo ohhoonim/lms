@@ -2,6 +2,7 @@ package dev.ohhoonim.component.attachFile;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.DisplayName;
@@ -18,9 +19,9 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import dev.ohhoonim.component.dataBy.Created;
-import dev.ohhoonim.component.dataBy.Modified;
-import dev.ohhoonim.component.id.Id;
+import dev.ohhoonim.component.auditing.dataBy.Created;
+import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.dataBy.Modified;
 
 @Testcontainers
 @RunWith(SpringRunner.class)
@@ -59,11 +60,11 @@ public class AttachFileMapperTest {
 
         assertThat(savedFile.getCreator()).isInstanceOf(Created.class);
         var creator= (Created)savedFile.getCreator();
-        assertThat(creator.getCreated()).isBefore(LocalDateTime.now());
+        assertThat(creator.getCreated()).isBefore(Instant.now());
 
         assertThat(savedFile.getModifier()).isInstanceOf(Modified.class);
         var modifier = (Modified)savedFile.getModifier();
-        assertThat(modifier.getModified()).isBefore(LocalDateTime.now());
+        assertThat(modifier.getModified()).isBefore(Instant.now());
 
         mapper.deleteAttachFile(id);
         var deletedFile = mapper.selectAttachFile(id);

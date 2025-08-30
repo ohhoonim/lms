@@ -1,6 +1,6 @@
-@org.springframework.modulith.ApplicationModule(allowedDependencies = {
-    "component::masterCode",
-})
+// @org.springframework.modulith.ApplicationModule(allowedDependencies = {
+//     "component::masterCode",
+// })
 package dev.ohhoonim.lms;
 
 /**
