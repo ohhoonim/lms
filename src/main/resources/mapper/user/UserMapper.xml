@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.ohhoonim.user.infra.UserMapper">
+    
+    <select id="findByUsernamePassword" resultType="string">
+        select username 
+        from system_domain_user
+        where username = #{name}
+            and password = #{password}
+    </select>
+
+    <resultMap id="user" type="user">
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="contact" property="contact"/>
+        <association property="accountStatus">
+            <result column="enabled" property="enabled"/>
+            <result column="locked" property="locked"/>
+            <result column="failed_attempt_count" property="failedAttemptCount"/>
+        </association>
+        <collection property="attributes" ofType="userAttribute">
+            <result column="attribute_id" property="attributeId"/>
+            <result column="name" property="name"/>
+            <result column="value" property="value"/>
+        </collection>
+    </resultMap>
+
+    <sql id="system_domain_user">
+        select
+            u.user_id,
+            u.username,
+            u.password,
+            u.email,
+            u.contact,
+            u.enabled,
+            u.locked,
+            u.failed_attempt_count,
+            a.attribute_id,
+            a.name,
+            a.value
+        from system_domain_user u
+        left join system_domain_user_attribute a
+            on u.user_id = a.user_id
+    </sql>
+
+    <select id="verifyLoginUser" resultMap="user">
+        <include refid="system_domain_user"></include>
+        where username = #{username}
+            and password = #{encodedPassword}
+    </select> 
+
+
+    <select id="getUserId" resultType="user">
+        select
+            user_id
+            , username
+        from system_domain_user
+        where
+            username = #{username}
+    </select>
+
+    <update id="changeActivate">
+        update system_domain_user
+        set
+            enabled = #{isEnabled}
+        where 
+            username = #{username}
+    </update>
+
+    <update id="changeLock">
+        update system_domain_user
+        set
+            locked = #{isLock}
+        where
+            username = #{username}
+    </update>
+
+    <update id="resetPassword">
+        update system_domain_user
+        set
+            password = #{newEncodedPassword}
+        where
+            username = #{username}
+    </update>
+
+    <insert id="saveUser" parameterType="user">
+        insert into system_domain_user
+        (
+            user_id
+            , username
+            , password
+            , email
+            , contact
+            , enabled
+            , locked
+            , failed_attempt_count
+            , creator
+            , created
+            , modifier
+            , modified
+        ) values (
+            #{userId}
+            , #{username}
+            , #{password}
+            , #{email}
+            , #{contact}
+            , #{accountStatus.enabled}
+            , #{accountStatus.locked}
+            , #{accountStatus.failedAttemptCount}
+            , #{creator.creator}
+            , #{creator.created}
+            , #{modifier.modifier}
+            , #{modifier.modified}
+        )
+    </insert>
+
+    <insert id="saveUserAttribute" parameterType="userAttribute">
+        insert into system_domain_user_attribute
+        (
+            attribute_id
+            , user_id
+            , name
+            , value
+            , creator
+            , created
+            , modifier
+            , modified
+        ) values (
+            #{attributeId}
+            , #{userId.userId}
+            , #{name}
+            , #{value}
+            , #{creator.creator}
+            , #{creator.created}
+            , #{modifier.modifier}
+            , #{modifier.modified}
+        )
+    </insert>
+
+    <update id="modifiyInfo" parameterType="user">
+        update system_domain_user
+        set
+            email = #{email} 
+            , contact = #{contact}
+            , modifier = #{modifier.modifier}
+            , modified = #{modifier.modified}
+        where
+            username = #{username} 
+    </update>
+
+    <select id="findAttributeBy" resultType="string">
+        select 
+            value
+        from system_domain_user_attribute
+        where 
+            user_id = #{userId.userId}
+            and name = #{name}
+    </select>
+
+    <update id="modifyAttribute" parameterType="userAttribute">
+        update system_domain_user_attribute
+        set
+            value = #{value}
+            , modifier = #{modifier.modifier}
+            , modified = #{modifier.modified}
+        where
+            user_id = #{userId.userId}
+            and name = #{name}
+    </update>
+
+    <select id="failedCount" resultType="integer">
+        select 
+            failed_attempt_count
+        from 
+            system_domain_user
+        where 
+            username = #{username}
+    </select>
+
+    <update id="increaseFailedAttemptCount">
+        update system_domain_user
+        set
+            failed_attempt_count = #{newCount}
+        where
+            username = #{username}
+    </update>
+
+    <select id="findByUsername" resultMap="user">
+        <include refid="system_domain_user"></include>
+        where username = #{username}
+    </select> 
+
+    <sql id="condition">
+        <if test="req.username != null and req.username != ''">
+            u.username = #{req.username}
+        </if>
+        <if test="req.name != null and req.name != ''">
+            AND u.name = #{req.name}
+        </if>
+        <if test="req.enabled != null">
+            AND u.enabled = #{req.enabled}
+        </if>
+        <if test="req.locked != null">
+            AND u.locked = #{req.locked}
+        </if>
+        <if test="req.attributes != null and req.attributes.size > 0">
+            <foreach collection="req.attributes" item="attr" 
+                    open="AND (" separator=" AND " close=")">
+                (a.name= #{attr.name} AND ua.value = #{attr.value})
+            </foreach>
+        </if>
+    </sql>
+
+    <select id="findUsers" resultMap="user">
+        <include refid="system_domain_user"></include>
+        <where>
+            <include refid="condition"></include>
+            <if test="page.lastSeenKey != null">
+                and u.user_id > #{page.lastSeenKey.id}
+            </if>
+        </where>
+        order by user_id
+        limit #{page.limit}
+    </select>
+
+    <select id="findUsersTotal" resultType="int">
+        select
+            count(u.user_id)
+        from system_domain_user u
+        left join system_domain_user_attribute a
+            on u.user_id = a.user_id
+        <where>
+            <include refid="condition"></include>
+        </where>
+        group by u.user_id
+    </select>
+</mapper>

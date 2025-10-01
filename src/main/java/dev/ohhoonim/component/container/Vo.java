@@ -14,4 +14,7 @@ public record Vo<T>(
     public Vo(T record) {
         this(record, null, null, null);
     }
+    public Vo(T record, Page page) {
+        this(record, page, null, null);
+    }
 }

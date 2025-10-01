@@ -8,17 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.ohhoonim.component.auditing.dataBy.Id;
 import jakarta.websocket.server.PathParam;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/aggregateHistory")
+@RequiredArgsConstructor
 public class AggregateHistoryController {
     
     private final ChangedEventRepository changedEventRepository;
-
-    public AggregateHistoryController (ChangedEventRepository changedEventRepository) {
-        this.changedEventRepository = changedEventRepository;
-    }
-
 
     @GetMapping("/{entityType}/{entityId}")
     public List<LookupEvent> lookup(@PathParam("entityType") String entityType, 
