@@ -1,10 +1,12 @@
 package dev.ohhoonim.component.container;
 
+import jakarta.validation.Valid;
+
 public final class Search<T> implements Container{
 
-    private T req;
+    @Valid private T req;
     private Page page;
-    public Search(T req, Page page) {
+    public Search(@Valid T req, Page page) {
         this.req = req;
         this.page = page;
     }

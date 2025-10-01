@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.ohhoonim.component.auditing.dataBy.Created;
 import dev.ohhoonim.component.auditing.dataBy.Entity;
 import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.sign.SignUser;
 
 @Repository
 public class ChangedEventRepository<T extends Entity> {
@@ -102,5 +103,30 @@ public class ChangedEventRepository<T extends Entity> {
                 creator , 
                 pgObject.getValue() 
             );
+    };
+
+    public void recordingSignin(SigninEvent signUser) {
+        if (signUser == null || signUser.username() == null) {
+            throw new RuntimeException("사용자 정보가 존재하지 않습니다");
+        }
+
+        var sql = """
+                INSERT INTO component_changed_event
+                 (id, entity_type, entity_id, creator, created, json_data)
+                 VALUES(:id, :entityType, :entityId, :creator, :created, :jsonData);
+                 """;
+        jdbcClient.sql(sql)
+                .params(signToParamMap.apply(signUser))
+                .update();
+    }
+    private Function<ChangedEvent<SignUser>, Map<String, Object>> signToParamMap = (event) -> {
+        var map = new HashMap<String, Object>();
+        map.put("id", event.getId().toString());
+        map.put("entityType", event.getEntityType());
+        map.put("entityId", event.getEntityId());
+        map.put("creator", event.getCreator().getCreator());
+        map.put("created", Timestamp.from(event.getCreator().getCreated()));
+        map.put("jsonData", toJsonb.apply(event.getJsonData()));
+        return map;
     };
 }

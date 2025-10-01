@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.ohhoonim.user.infra.PendingMapper">
+   
+    <insert id="addPending" parameterType="pendingChange">
+        insert into system_domain_user_pending_change
+        (   pending_change_id
+            , user_id
+            , username
+            , change_type
+            , effective_date
+            , status
+            , creator
+            , created
+            , modifier
+            , modified
+        )
+        values 
+        (     #{pendingChangeId}
+            , #{user.id}
+            , #{user.username}
+            , #{changeType}
+            , #{effectiveDate}
+            , #{status}
+            , #{creator.creator}
+            , #{creator.created}
+            , #{modifier.modifier}
+            , #{modifier.modified}
+        )
+    </insert>
+
+    <insert id="addChangeDetail" parameterType="changeDetail" >
+        insert into system_domain_user_change_detail
+        (
+              change_detail_id
+            , pending_change_id
+            , attribute_name
+            , old_value
+            , new_value
+            , creator
+            , created
+            , modifier
+            , modified
+        ) values (
+              #{changeDetailId}
+            , #{pendingChange.id}
+            , #{attributeName}
+            , #{oldValue}
+            , #{newValue}
+            , #{creator.creator}
+            , #{creator.created}
+            , #{modifier.modifier}
+            , #{modifier.modified}
+        )
+    </insert>
+
+    <resultMap id="pending" type="pendingChange">
+        <result column="pending_change_id" property="pendingChangeId"/>
+        <result column="change_type" property="changeType"/>
+        <result column="effective_date" property="effectiveDate"/>
+        <result column="status" property="status"/>
+        <association property="user">
+            <result column="user_id" property="userId"/> 
+            <result column="username" property="username"/>
+        </association>
+        <collection property="changeDetails" ofType="changeDetail">
+            <result column="change_detail_id" property="changeDetailId"/>
+            <result column="attribute_name" property="attributeName"/>
+            <result column="old_value" property="oldValue"/>
+            <result column="new_value" property="newValue"/>
+        </collection>
+    </resultMap>
+
+    <select id="pendings" resultMap="pending">
+        select
+              p.pending_change_id
+            , p.change_type
+            , p.effective_date
+            , p.status
+            , p.user_id
+            , p.username
+            , d.change_detail_id
+            , d.attribute_name
+            , d.old_value
+            , d.new_value
+        from system_domain_user_pending_change p
+        join system_domain_user_change_detail d
+            on p.pending_change_id = d.pending_change_id 
+        where
+            p.effective_date = #{effectiveDate}
+    </select>
+
+</mapper>

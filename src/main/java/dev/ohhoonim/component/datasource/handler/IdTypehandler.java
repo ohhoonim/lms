@@ -22,18 +22,18 @@ public class IdTypehandler extends BaseTypeHandler<Id> {
     @Override
     public Id getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String id = rs.getString(columnName);
-        return id == null ? new Id() : Id.valueOf(id);
+        return id == null ? null : Id.valueOf(id);
     }
 
     @Override
     public Id getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String id = rs.getString(columnIndex);
-        return id == null ? new Id() : Id.valueOf(id);
+        return id == null ? null : Id.valueOf(id);
     }
 
     @Override
     public Id getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String id = cs.getString(columnIndex);
-        return id == null ? new Id() : Id.valueOf(id);
+        return id == null ? null : Id.valueOf(id);
     }
 }

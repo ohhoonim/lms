@@ -28,44 +28,42 @@ ext {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	// spring framework - web application 구성
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-amqp'
-	implementation 'org.springframework.boot:spring-boot-starter-batch'
-	implementation 'org.springframework.modulith:spring-modulith-starter-core'
-	implementation 'org.springframework.modulith:spring-modulith-starter-jdbc'
-	runtimeOnly 'org.springframework.modulith:spring-modulith-events-amqp'
-	implementation 'org.springframework.modulith:spring-modulith-events-api'
-	implementation 'org.aspectj:aspectjweaver:1.9.24'
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.12.0'
-	compileOnly 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	runtimeOnly 'org.postgresql:postgresql'
-	runtimeOnly 'org.springframework.modulith:spring-modulith-actuator'
-	runtimeOnly 'org.springframework.modulith:spring-modulith-observability'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.batch:spring-batch-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-	testImplementation 'org.testcontainers:junit-jupiter'
-	testImplementation 'org.testcontainers:postgresql'
-	testImplementation 'org.springframework.amqp:spring-rabbit-test'
-
+	// for Application Architecture
+	//    - required: ulid, lombok, validation, poi
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'com.github.f4b6a3:ulid-creator:5.2.3'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'commons-io:commons-io:2.19.0'
-
+	implementation 'org.aspectj:aspectjweaver:1.9.24'
+	implementation 'org.apache.poi:poi-ooxml:5.4.1'
+	//    - optional: docker, p6spy
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.12.0'
+	// database - postgresql, testcontainers
+	implementation 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.testcontainers:junit-jupiter'
+	// mybatis	
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
+	// security and jwt
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
-
-	implementation 'com.github.f4b6a3:ulid-creator:5.2.3'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
-	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
+	// modulith: core
+	implementation 'org.springframework.modulith:spring-modulith-starter-core'
+	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
 
 }
 
