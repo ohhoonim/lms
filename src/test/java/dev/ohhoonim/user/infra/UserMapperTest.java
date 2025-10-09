@@ -23,12 +23,12 @@ import dev.ohhoonim.component.auditing.dataBy.Id;
 import dev.ohhoonim.component.auditing.dataBy.Modified;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.component.sign.api.PasswordConfig;
-import dev.ohhoonim.user.AccountStatus;
-import dev.ohhoonim.user.ChangeDetail;
-import dev.ohhoonim.user.PendingChange;
-import dev.ohhoonim.user.User;
-import dev.ohhoonim.user.UserAttribute;
-import dev.ohhoonim.user.activity.UserReq;
+import dev.ohhoonim.user.application.UserReq;
+import dev.ohhoonim.user.model.AccountStatus;
+import dev.ohhoonim.user.model.ChangeDetail;
+import dev.ohhoonim.user.model.PendingChange;
+import dev.ohhoonim.user.model.User;
+import dev.ohhoonim.user.model.UserAttribute;
 
 @Import(PasswordConfig.class)
 @Testcontainers
@@ -88,8 +88,8 @@ public class UserMapperTest {
         pending.setChangeType(PendingChangeType.Lock.masterCode());
         pending.setEffectiveDate(LocalDateTime.now());
         pending.setStatus(PendingChangeStatus.Pending.masterCode());
-        pending.setCreator(new Created());
-        pending.setModifier(new Modified());
+        pending.setCreator(new Created("matthew"));
+        pending.setModifier(new Modified("matthew"));
 
         pendingMapper.addPending(pending);
     }
@@ -119,8 +119,8 @@ public class UserMapperTest {
         accountStatus.setFailedAttemptCount(0); // default
         user.setAccountStatus(accountStatus);
 
-        var creator = new Created();
-        var modifier = new Modified();
+        var creator = new Created("matthew");
+        var modifier = new Modified("matthew");
         user.setCreator(creator);
         user.setModifier(modifier);
 
@@ -136,8 +136,8 @@ public class UserMapperTest {
         var userAttribute = new UserAttribute("job", "counter");
         userAttribute.setAttributeId(new Id());
         userAttribute.setUser(userId);
-        userAttribute.setCreator(new Created());
-        userAttribute.setModifier(new Modified());
+        userAttribute.setCreator(new Created("matthew"));
+        userAttribute.setModifier(new Modified("matthew"));
 
         userMapper.saveUserAttribute(userAttribute);
     }
@@ -162,7 +162,7 @@ public class UserMapperTest {
     void modifiyAttribute() {
         var userAttribute = new UserAttribute("job", "counter");
         userAttribute.setUser(makeUser());
-        userAttribute.setModifier(new Modified());
+        userAttribute.setModifier(new Modified("matthew"));
 
         userMapper.modifyAttribute(userAttribute);
     }
@@ -225,7 +225,7 @@ public class UserMapperTest {
         var pending = new PendingChange();
         pending.setPendingChangeId(pendingId);
         pending.setUser(new User("maathew")); // 신규유저는 id가 없다
-        pending.setCreator(new Created());
+        pending.setCreator(new Created("matthew"));
         pendingMapper.addPending(pending);
 
         var changeDetail = new ChangeDetail();
@@ -233,7 +233,7 @@ public class UserMapperTest {
         changeDetail.setPendingChange(pending);
         changeDetail.setAttributeName("job");
         changeDetail.setNewValue("intern");
-        changeDetail.setCreator(new Created());
+        changeDetail.setCreator(new Created("matthew"));
         pendingMapper.addChangeDetail(changeDetail);
     }
 

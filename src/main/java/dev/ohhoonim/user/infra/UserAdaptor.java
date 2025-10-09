@@ -12,13 +12,13 @@ import dev.ohhoonim.component.auditing.dataBy.Modified;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
-import dev.ohhoonim.user.ChangeDetail;
-import dev.ohhoonim.user.PendingChange;
-import dev.ohhoonim.user.User;
-import dev.ohhoonim.user.UserAttribute;
-import dev.ohhoonim.user.activity.UserReq;
-import dev.ohhoonim.user.activity.port.PendingChangePort;
-import dev.ohhoonim.user.activity.port.UserPort;
+import dev.ohhoonim.user.application.UserReq;
+import dev.ohhoonim.user.model.ChangeDetail;
+import dev.ohhoonim.user.model.PendingChange;
+import dev.ohhoonim.user.model.User;
+import dev.ohhoonim.user.model.UserAttribute;
+import dev.ohhoonim.user.port.PendingChangePort;
+import dev.ohhoonim.user.port.UserPort;
 import lombok.RequiredArgsConstructor;
 
 @Component

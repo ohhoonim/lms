@@ -6,9 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import dev.ohhoonim.component.container.Page;
-import dev.ohhoonim.user.User;
-import dev.ohhoonim.user.UserAttribute;
-import dev.ohhoonim.user.activity.UserReq;
+import dev.ohhoonim.user.application.UserReq;
+import dev.ohhoonim.user.model.User;
+import dev.ohhoonim.user.model.UserAttribute;
 
 @Mapper
 public interface UserMapper {

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import dev.ohhoonim.user.User;
-import dev.ohhoonim.user.activity.service.UserBatchService;
+import dev.ohhoonim.user.internal.UserBatchService;
+import dev.ohhoonim.user.model.User;
 import lombok.RequiredArgsConstructor;
 
 @RestController

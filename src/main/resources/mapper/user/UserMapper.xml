@@ -129,7 +129,7 @@
             , modified
         ) values (
             #{attributeId}
-            , #{userId.userId}
+            , #{user.userId}
             , #{name}
             , #{value}
             , #{creator.creator}
@@ -166,7 +166,7 @@
             , modifier = #{modifier.modifier}
             , modified = #{modifier.modified}
         where
-            user_id = #{userId.userId}
+            user_id = #{user.userId}
             and name = #{name}
     </update>
 

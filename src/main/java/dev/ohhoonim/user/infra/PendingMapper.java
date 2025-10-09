@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import dev.ohhoonim.user.ChangeDetail;
-import dev.ohhoonim.user.PendingChange;
+import dev.ohhoonim.user.model.ChangeDetail;
+import dev.ohhoonim.user.model.PendingChange;
 
 @Mapper
 public interface PendingMapper {
