@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dev.ohhoonim.user.activity.service.UserBatchService;
+import dev.ohhoonim.user.internal.UserBatchService;
 
 @WebMvcTest(UserBatchController.class)
 public class UserBatchControllerTest {

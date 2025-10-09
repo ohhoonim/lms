@@ -9,7 +9,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -25,11 +24,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
-import dev.ohhoonim.user.User;
-import dev.ohhoonim.user.activity.UserEnableStatus;
-import dev.ohhoonim.user.activity.UserLockStatus;
-import dev.ohhoonim.user.activity.UserReq;
-import dev.ohhoonim.user.activity.service.UserService;
+import dev.ohhoonim.user.application.UserEnableStatus;
+import dev.ohhoonim.user.application.UserLockStatus;
+import dev.ohhoonim.user.application.UserReq;
+import dev.ohhoonim.user.internal.UserService;
+import dev.ohhoonim.user.model.User;
 
 @WebMvcTest(UserController.class)
 public class UserControllerTest {

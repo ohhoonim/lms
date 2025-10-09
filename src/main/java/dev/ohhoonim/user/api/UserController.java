@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
-import dev.ohhoonim.user.User;
-import dev.ohhoonim.user.activity.UserEnableStatus;
-import dev.ohhoonim.user.activity.UserLockStatus;
-import dev.ohhoonim.user.activity.UserReq;
-import dev.ohhoonim.user.activity.service.UserService;
+import dev.ohhoonim.user.application.UserEnableStatus;
+import dev.ohhoonim.user.application.UserLockStatus;
+import dev.ohhoonim.user.application.UserReq;
+import dev.ohhoonim.user.internal.UserService;
+import dev.ohhoonim.user.model.User;
 import lombok.RequiredArgsConstructor;
 
 @RestController
