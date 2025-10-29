@@ -1,6 +1,7 @@
 package dev.ohhoonim.component.sign.api.filter;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +13,7 @@ public class BearerAuthenticationToken extends AbstractAuthenticationToken{
 
     public BearerAuthenticationToken(String credentials) {
         // 인증 전에는 권한이 없으므로 null을 전달
-        super(null);
+        super(Collections.EMPTY_LIST); 
         this.principal = null;
         this.credentials = credentials;
         setAuthenticated(false);
