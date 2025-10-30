@@ -15,9 +15,8 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AssignableTypeFilter;
 import org.springframework.lang.NonNull;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-
 import dev.ohhoonim.component.auditing.dataBy.Entity;
+import tools.jackson.databind.util.NamingStrategyImpls;
 
 public class EntitySetBeanRegistrar implements ImportBeanDefinitionRegistrar {
     @Override
@@ -67,8 +66,7 @@ public class EntitySetBeanRegistrar implements ImportBeanDefinitionRegistrar {
             Map<String, Class<? extends Entity>> entities = new HashMap<>();
             for (String className : entityClassNames) {
                 Class<? extends Entity> clazz = (Class<? extends Entity>) Class.forName(className);
-                String entityName = new PropertyNamingStrategies.SnakeCaseStrategy()
-                        .translate(clazz.getSimpleName());
+                String entityName = NamingStrategyImpls.SNAKE_CASE.translate(clazz.getSimpleName());
 
                 entities.put(entityName, clazz);
             }

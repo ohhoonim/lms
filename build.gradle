@@ -24,16 +24,19 @@ repositories {
 }
 
 ext {
-	set('springModulithVersion', "1.2.1")
+	set('springModulithVersion', "2.0.0-RC1")
 }
 
 dependencies {
 	// spring framework - web application 구성
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	implementation 'org.springframework.boot:spring-boot-starter-restclient'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-jdbc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	// for Application Architecture
 	//    - required: ulid, lombok, validation, poi
@@ -50,7 +53,7 @@ dependencies {
 	// database - postgresql, testcontainers
 	implementation 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'org.testcontainers:testcontainers-postgresql'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	// mybatis	
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
