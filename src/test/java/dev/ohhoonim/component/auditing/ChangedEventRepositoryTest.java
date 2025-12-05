@@ -11,9 +11,9 @@ import org.springframework.boot.jdbc.test.autoconfigure.JdbcTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 import dev.ohhoonim.component.auditing.change.ChangedEventListener;
 import dev.ohhoonim.component.auditing.change.ChangedEventRepository;
@@ -33,8 +33,8 @@ public class ChangedEventRepositoryTest {
 
     @Container
     @ServiceConnection
-    private static PostgreSQLContainer<?> postgres =
-            new PostgreSQLContainer<>(DockerImageName.parse("postgres:17.2-alpine"));
+    private static PostgreSQLContainer postgres =
+            new PostgreSQLContainer(DockerImageName.parse("postgres:17.2-alpine"));
 
     @Autowired
     ChangedEventRepository<Note> changedEventRepository;
