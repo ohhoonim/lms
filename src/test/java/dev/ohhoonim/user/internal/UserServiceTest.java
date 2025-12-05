@@ -9,11 +9,9 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,9 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.github.f4b6a3.ulid.UlidCreator;
-
 import dev.ohhoonim.component.auditing.dataBy.Id;
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
@@ -102,16 +98,13 @@ public class UserServiceTest {
         var userId = new Id();
         var user = new User(userId);
         user.setUsername("matthew");
-        assertThat(user)
-            .extracting(u -> user.getId()).isEqualTo(userId)
-            .extracting(u -> user.getUsername()).isEqualTo("matthew");
+        assertThat(user).extracting(u -> user.getId()).isEqualTo(userId)
+                .extracting(u -> user.getUsername()).isEqualTo("matthew");
 
         userService.withdrawUser(user);
 
-        verify(userPort, times(1))
-                .changeLock(eq("matthew"), eq(true), any());
-        verify(userPort, times(1))
-                .changeActivate(eq("matthew"), eq(false));
+        verify(userPort, times(1)).changeLock(eq("matthew"), eq(true), any());
+        verify(userPort, times(1)).changeActivate(eq("matthew"), eq(false));
     }
 
     @Test
@@ -123,8 +116,7 @@ public class UserServiceTest {
         var result = userService.modifyLock(user, true, null);
         assertThat(result).isEqualTo(UserLockStatus.Lock);
 
-        verify(userPort, times(1))
-                .changeLock(eq("matthew"), eq(true), any());
+        verify(userPort, times(1)).changeLock(eq("matthew"), eq(true), any());
     }
 
     @Test
@@ -151,13 +143,10 @@ public class UserServiceTest {
         when(passwordEncoder.encode(any())).thenReturn("encoded_test");
 
         userService.resetPassword(user, "abcd", "abcd");
-        
-        verify(userPort, times(1))
-                .resetPassword(eq("matthew"), eq("encoded_test"));
-        verify(userPort, times(1))
-                .changeLock(eq("matthew"), eq(false), any());
-        verify(userPort, times(1))
-                .changeActivate(eq("matthew"), eq(true));
+
+        verify(userPort, times(1)).resetPassword(eq("matthew"), eq("encoded_test"));
+        verify(userPort, times(1)).changeLock(eq("matthew"), eq(false), any());
+        verify(userPort, times(1)).changeActivate(eq("matthew"), eq(true));
     }
 
     @Test
@@ -212,15 +201,13 @@ public class UserServiceTest {
         var username = new User();
         username.setUsername("matthew");
 
-        when(userPort.increaseFailedAttemptCount(any(), eq(false)))
-            .thenReturn(2);
-        
+        when(userPort.increaseFailedAttemptCount(any(), eq(false))).thenReturn(2);
+
         var result = userService.increaseFailedAttemptCount(username, false);
         assertThat(result).isEqualTo(2);
 
         // 초기화를 실행하면 카운트가 0이 된다
-        when(userPort.increaseFailedAttemptCount(any(), eq(true)))
-            .thenReturn(0);
+        when(userPort.increaseFailedAttemptCount(any(), eq(true))).thenReturn(0);
 
         var initResult = userService.increaseFailedAttemptCount(username, true);
         assertThat(initResult).isEqualTo(0);
@@ -237,24 +224,22 @@ public class UserServiceTest {
         var result = userService.lastLogin(username);
 
         assertThat(result).isEqualTo(now);
-    } 
+    }
 
     @Test
     void batchDormantUser() {
         var user1 = new User();
         user1.setUsername("matthew");
-        var user2 = new User(); 
+        var user2 = new User();
         var user3 = new User();
         user3.setUsername("ohhoonim");
 
-        var users = List.of(user1, user2, user3); 
+        var users = List.of(user1, user2, user3);
 
         userService.batchDormantUser(users);
 
-        verify(userPort, times(2))
-                .changeActivate(any(), eq(false));
-        verify(userPort, times(2))
-                .changeLock(any(), eq(false), any());
+        verify(userPort, times(2)).changeActivate(any(), eq(false));
+        verify(userPort, times(2)).changeLock(any(), eq(false), any());
     }
 
     @Test
@@ -271,13 +256,11 @@ public class UserServiceTest {
 
         when(userPort.findByUsername(any())).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() ->  userService.userInfo(username))
+        assertThatThrownBy(() -> userService.userInfo(username))
                 .hasMessageContaining("사용자를 찾을 수 없습니다");
 
-        
+
     }
-
-
 
 
 

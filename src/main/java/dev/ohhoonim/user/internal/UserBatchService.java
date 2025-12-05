@@ -1,9 +1,6 @@
 package dev.ohhoonim.user.internal;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,15 +8,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Function;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Service;
-
 import dev.ohhoonim.component.auditing.dataBy.Created;
 import dev.ohhoonim.component.auditing.dataBy.Id;
 import dev.ohhoonim.component.auditing.dataBy.Modified;
@@ -107,17 +101,13 @@ public class UserBatchService implements BatchRegisterActivity, BatchUpdateActiv
         return count;
     }
 
-    private BiFunction<PendingChange, User, List<UserAttribute>> makeAttribute = (pending, user) -> {
-        return pending.getChangeDetails().stream().map(detail -> {
-            return new UserAttribute(
-                    null,
-                    user,
-                    detail.getAttributeName(),
-                    detail.getNewValue(),
-                    new Created(),
-                    new Modified());
-        }).toList();
-    };
+    private BiFunction<PendingChange, User, List<UserAttribute>> makeAttribute =
+            (pending, user) -> {
+                return pending.getChangeDetails().stream().map(detail -> {
+                    return new UserAttribute(null, user, detail.getAttributeName(),
+                            detail.getNewValue(), new Created(), new Modified());
+                }).toList();
+            };
 
     /**
      * cvs, excel 로 업로드된 데이터를 이용하여 사용자 등록할 때 사용
@@ -151,8 +141,7 @@ public class UserBatchService implements BatchRegisterActivity, BatchUpdateActiv
                     user.setName(values[2].trim());
                     user.setEmail(values[3].trim());
 
-                    user.setAttributes(List.of(
-                            new UserAttribute("job", values[4].trim())
+                    user.setAttributes(List.of(new UserAttribute("job", values[4].trim())
                     // FIXME attribute 부분 보강 할 것 
                     ));
 
@@ -185,10 +174,10 @@ public class UserBatchService implements BatchRegisterActivity, BatchUpdateActiv
                 user.setName(getStringCellValue(row.getCell(2)).trim());
                 user.setEmail(getStringCellValue(row.getCell(3)).trim());
 
-                user.setAttributes(List.of(
-                        new UserAttribute("job", getStringCellValue(row.getCell(4)).trim())
-                // FIXME : 추가 속성 설정 
-                ));
+                user.setAttributes(
+                        List.of(new UserAttribute("job", getStringCellValue(row.getCell(4)).trim())
+                        // FIXME : 추가 속성 설정 
+                        ));
 
                 users.add(user);
             }

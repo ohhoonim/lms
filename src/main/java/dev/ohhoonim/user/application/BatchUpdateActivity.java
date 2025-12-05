@@ -2,8 +2,6 @@ package dev.ohhoonim.user.application;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import dev.ohhoonim.user.model.PendingChange;
 import dev.ohhoonim.user.model.User;
 
 public interface BatchUpdateActivity {
