@@ -2,10 +2,7 @@ package dev.ohhoonim.user.api;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.lang.NonNull;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import dev.ohhoonim.user.internal.UserBatchService;
 import dev.ohhoonim.user.model.User;
 import lombok.RequiredArgsConstructor;
@@ -27,23 +23,23 @@ public class UserBatchController {
     private final UserBatchService userBatchService;
 
     @PostMapping("/batchUpdate")
-    public int batchUpdate(@RequestBody @NonNull List<User> users) {
+    public int batchUpdate(@RequestBody List<User> users) {
         return userBatchService.batchUpdate(users);
     }
 
     @GetMapping("/applyPendingChangesToUser")
-    public int applyPendingChangesToUser(@RequestParam("effectiveDate") LocalDateTime effectiveDate) {
+    public int applyPendingChangesToUser(
+            @RequestParam("effectiveDate") LocalDateTime effectiveDate) {
         return userBatchService.applyPendingChangesToUser(effectiveDate);
     }
 
     @PostMapping("/batchRegister")
-    public int batchRegister(@RequestBody @NonNull List<User> users) {
+    public int batchRegister(@RequestBody List<User> users) {
         return userBatchService.batchRegister(users);
     }
 
     @PostMapping("/translateCsvToUsers")
-    public List<User> translateCsvToUsers(
-            @RequestPart("file") MultipartFile uploadedFile) {
+    public List<User> translateCsvToUsers(@RequestPart("file") MultipartFile uploadedFile) {
         String extension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
         if (!"csv".equals(extension)) {
             throw new RuntimeException("csv 파일만 업로드해주세요");
@@ -51,14 +47,13 @@ public class UserBatchController {
 
         try (var csv = uploadedFile.getInputStream()) {
             return userBatchService.translateCsvToUsers(csv);
-        } catch (Exception e) {
+        } catch (Exception _) {
             throw new RuntimeException("파일 처리중 에러가 발생하였습니다");
         }
     }
 
     @PostMapping("/translateExcelToUsers")
-    public List<User> translateExcelToUsers(
-            @RequestPart("file") MultipartFile uploadedFile) {
+    public List<User> translateExcelToUsers(@RequestPart("file") MultipartFile uploadedFile) {
         String extension = FilenameUtils.getExtension(uploadedFile.getOriginalFilename());
         if (!("xls".equals(extension) || "xlsx".equals(extension))) {
             throw new RuntimeException("excel 파일만 업로드해주세요");
@@ -66,7 +61,7 @@ public class UserBatchController {
 
         try (var excel = uploadedFile.getInputStream()) {
             return userBatchService.translateExcelToUsers(excel);
-        } catch (Exception e) {
+        } catch (Exception _) {
             throw new RuntimeException("파일 처리중 에러가 발생하였습니다");
         }
     }

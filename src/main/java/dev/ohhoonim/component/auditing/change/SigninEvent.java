@@ -1,11 +1,9 @@
 package dev.ohhoonim.component.auditing.change;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dev.ohhoonim.component.auditing.dataBy.Created;
 import dev.ohhoonim.component.auditing.dataBy.Id;
 import dev.ohhoonim.component.sign.SignUser;
+import tools.jackson.databind.ObjectMapper;
 
 public final class SigninEvent implements ChangedEvent<SignUser> {
 
@@ -43,10 +41,6 @@ public final class SigninEvent implements ChangedEvent<SignUser> {
 
     public String getJsonData() {
         ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(signUser);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("json 변환에 실패하였습니다.");
-        }
+        return objectMapper.writeValueAsString(signUser);
     }
 }

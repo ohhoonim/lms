@@ -2,9 +2,7 @@ package dev.ohhoonim.component.auditing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +15,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dev.ohhoonim.component.auditing.change.ChangedEventListener;
 import dev.ohhoonim.component.auditing.change.ChangedEventRepository;
 import dev.ohhoonim.component.auditing.change.CreatedEvent;
@@ -27,6 +22,7 @@ import dev.ohhoonim.component.auditing.change.LookupEvent;
 import dev.ohhoonim.component.auditing.dataBy.Created;
 import dev.ohhoonim.component.auditing.dataBy.Id;
 import dev.ohhoonim.para.Note;
+import tools.jackson.databind.ObjectMapper;
 
 @Testcontainers
 @JdbcTest
@@ -37,8 +33,8 @@ public class ChangedEventRepositoryTest {
 
     @Container
     @ServiceConnection
-    private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            DockerImageName.parse("postgres:17.2-alpine"));
+    private static PostgreSQLContainer<?> postgres =
+            new PostgreSQLContainer<>(DockerImageName.parse("postgres:17.2-alpine"));
 
     @Autowired
     ChangedEventRepository<Note> changedEventRepository;
@@ -76,7 +72,7 @@ public class ChangedEventRepositoryTest {
         var lookup = new LookupEvent<>(noteId, Note.class);
         List<LookupEvent<Note>> results = changedEventRepository.lookupEvent(lookup);
 
-        log.info("{}", results) ;
+        log.info("{}", results);
 
         assertThat(results).hasSize(1);
 
@@ -89,8 +85,7 @@ public class ChangedEventRepositoryTest {
     public void changedEventListenerTest() throws InterruptedException {
 
         Id noteId = new Id();
-        CreatedEvent<Note> event = new CreatedEvent<Note>(
-                new Note(noteId, "this is new note"), 
+        CreatedEvent<Note> event = new CreatedEvent<Note>(new Note(noteId, "this is new note"),
                 new Created("ohhoonim"));
         publisher.publishEvent(event);
 

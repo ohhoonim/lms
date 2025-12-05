@@ -1,12 +1,11 @@
 package dev.ohhoonim.component.auditing.change;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dev.ohhoonim.component.auditing.dataBy.Created;
 import dev.ohhoonim.component.auditing.dataBy.Entity;
 import dev.ohhoonim.component.auditing.dataBy.Id;
+import tools.jackson.databind.ObjectMapper;
 
-public final class ModifiedEvent<T extends Entity> implements ChangedEvent<T>{
+public final class ModifiedEvent<T extends Entity> implements ChangedEvent<T> {
 
     private T oldRecord;
     private T newRecord;
@@ -20,7 +19,7 @@ public final class ModifiedEvent<T extends Entity> implements ChangedEvent<T>{
 
     @Override
     public Id getId() {
-       return newRecord.getId(); 
+        return newRecord.getId();
     }
 
     @Override
@@ -49,5 +48,5 @@ public final class ModifiedEvent<T extends Entity> implements ChangedEvent<T>{
         var changedField = new ChangedField(objectMapper);
         return changedField.apply(oldRecord, newRecord);
     }
-    
+
 }

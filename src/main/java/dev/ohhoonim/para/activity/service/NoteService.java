@@ -5,12 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-
 import dev.ohhoonim.component.auditing.change.CreatedEvent;
 import dev.ohhoonim.component.auditing.dataBy.Created;
 import dev.ohhoonim.component.auditing.dataBy.Id;
@@ -30,8 +26,6 @@ import dev.ohhoonim.para.activity.port.TagPort;
 @Service
 public class NoteService implements NoteActivity {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     private final NotePort notePort;
     private final ProjectPort projectPort;
     private final ShelfPort shelfPort;
@@ -39,11 +33,8 @@ public class NoteService implements NoteActivity {
 
     private final ApplicationEventPublisher eventPublisher;
 
-    public NoteService(NotePort notePort,
-            ProjectPort projectPort,
-            ShelfPort shelfPort,
-            TagPort tagPort,
-            ApplicationEventPublisher eventPublisher) {
+    public NoteService(NotePort notePort, ProjectPort projectPort, ShelfPort shelfPort,
+            TagPort tagPort, ApplicationEventPublisher eventPublisher) {
         this.notePort = notePort;
         this.projectPort = projectPort;
         this.shelfPort = shelfPort;
@@ -78,7 +69,8 @@ public class NoteService implements NoteActivity {
         notePort.addNote(newNote, newNoteId);
 
         Optional<Note> newAddedNote = this.getNote(newNoteId);
-        CreatedEvent<Note> event = new CreatedEvent<Note>(newAddedNote.get(), new Created("ohhoonim"));
+        CreatedEvent<Note> event =
+                new CreatedEvent<Note>(newAddedNote.get(), new Created("ohhoonim"));
         eventPublisher.publishEvent(event);
 
         return newAddedNote;
@@ -109,7 +101,7 @@ public class NoteService implements NoteActivity {
         if (para instanceof Project project) {
             projectPort.registNote(noteId, project);
         } else {
-            shelfPort.registNote(noteId, (Shelf)para);
+            shelfPort.registNote(noteId, (Shelf) para);
         }
     }
 
@@ -117,17 +109,16 @@ public class NoteService implements NoteActivity {
     public Set<Para> paras(Id noteId) {
         Set<Para> projects = projectPort.findProjectInNote(noteId);
         Set<Para> shelves = shelfPort.findShelfInNote(noteId);
-        
+
         // TODO virtual thread로 바꿔보기
 
-        return Stream.of(projects, shelves)
-                .flatMap(p -> p != null ? p.stream() : null)
+        return Stream.of(projects, shelves).flatMap(p -> p != null ? p.stream() : null)
                 .collect(Collectors.toSet());
     }
 
     @Override
     public void removePara(Id noteId, Para para) {
-        switch(para) {
+        switch (para) {
             case Project p -> projectPort.removeNote(noteId, p);
             case Shelf s -> shelfPort.removeNote(noteId, s);
         }

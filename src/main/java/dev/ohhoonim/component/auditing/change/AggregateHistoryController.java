@@ -1,14 +1,11 @@
 package dev.ohhoonim.component.auditing.change;
 
 import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import dev.ohhoonim.component.auditing.dataBy.Id;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -22,8 +19,7 @@ public class AggregateHistoryController {
     public List<LookupEvent<?>> lookup(@PathVariable("entityType") String entityType,
             @PathVariable("entityId") String entityId) throws ClassNotFoundException {
 
-        return changedEventRepository.lookupEvent(
-                new LookupEvent(Id.valueOf(entityId),
-                        Class.forName(entityType)));
+        return changedEventRepository
+                .lookupEvent(new LookupEvent(Id.valueOf(entityId), Class.forName(entityType)));
     }
 }

@@ -1,9 +1,7 @@
 package dev.ohhoonim.user.model;
 
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import dev.ohhoonim.component.auditing.dataBy.DataBy;
 import dev.ohhoonim.component.auditing.dataBy.Entity;
 import dev.ohhoonim.component.auditing.dataBy.Id;

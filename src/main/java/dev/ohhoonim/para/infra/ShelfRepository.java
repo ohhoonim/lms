@@ -7,11 +7,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
-
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-
 import dev.ohhoonim.component.auditing.dataBy.Id;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.para.Note;
@@ -38,16 +36,14 @@ public class ShelfRepository implements ShelfPort {
                 INSERT INTO para_shelf (shelf_id, shape, title, "content")
                 VALUES (:shelf_id, :shape, :title, :content)
                 """;
-        jdbcClient.sql(sql)
-                .params(toShelfMap.apply(s, newParaId))
-                .update();
+        jdbcClient.sql(sql).params(toShelfMap.apply(s, newParaId)).update();
     }
 
     private final BiFunction<Shelf, Id, Map<String, Object>> toShelfMap = (shelf, paraId) -> {
         String shape = switch (shelf) {
-            case Area a -> "area";
-            case Resource r -> "reaorce";
-            case Archive a -> "archive";
+            case Area _ -> "area";
+            case Resource _ -> "reaorce";
+            case Archive _ -> "archive";
         };
 
         var map = new HashMap<String, Object>();
@@ -65,9 +61,8 @@ public class ShelfRepository implements ShelfPort {
                 from para_shelf
                 where shelf_id = :paraId
                 """;
-        return jdbcClient.sql(sql)
-                .param("paraId", paraId.toString())
-                .query(shelfRowMapper).optional();
+        return jdbcClient.sql(sql).param("paraId", paraId.toString()).query(shelfRowMapper)
+                .optional();
     }
 
     private final RowMapper<Para> shelfRowMapper = (rs, idx) -> {
@@ -94,11 +89,8 @@ public class ShelfRepository implements ShelfPort {
                  where
                      shelf_id = :shelf_id
                  """;
-        jdbcClient.sql(sql)
-                .param("shelf_id", s.getParaId().toString())
-                .param("title", s.getTitle())
-                .param("content", s.getContent())
-                .update();
+        jdbcClient.sql(sql).param("shelf_id", s.getParaId().toString()).param("title", s.getTitle())
+                .param("content", s.getContent()).update();
     }
 
     @Override
@@ -110,10 +102,8 @@ public class ShelfRepository implements ShelfPort {
                  where
                      shelf_id = :shelf_id
                  """;
-        jdbcClient.sql(sql)
-                .param("shelf_id", origin.getParaId().toString())
-                .param("shape", targetPara.getSimpleName().toLowerCase())
-                .update();
+        jdbcClient.sql(sql).param("shelf_id", origin.getParaId().toString())
+                .param("shape", targetPara.getSimpleName().toLowerCase()).update();
     }
 
     @Override
@@ -122,9 +112,7 @@ public class ShelfRepository implements ShelfPort {
                 delete from para_shelf
                 where shelf_id = :shelf_id
                 """;
-        jdbcClient.sql(sql)
-                .param("shelf_id", s.getParaId().toString())
-                .update();
+        jdbcClient.sql(sql).param("shelf_id", s.getParaId().toString()).update();
     }
 
     // note와 연결된 shelf 목록
@@ -141,9 +129,7 @@ public class ShelfRepository implements ShelfPort {
                 on sn.shelf_id = s.shelf_id
                 where sn.note_id = :noteId
                 """;
-        return jdbcClient.sql(sql)
-                .param("noteId", noteId.toString())
-                .query(shelfRowMapper).set();
+        return jdbcClient.sql(sql).param("noteId", noteId.toString()).query(shelfRowMapper).set();
     }
 
     // shelf내 노트 관리 
@@ -154,10 +140,8 @@ public class ShelfRepository implements ShelfPort {
                 insert into para_shelf_note (shelf_id, note_id)
                 values (:shelf_id, :note_id)
                 """;
-        jdbcClient.sql(sql)
-                .param("shelf_id", s.getParaId().toString())
-                .param("note_id", noteId.toString())
-                .update();
+        jdbcClient.sql(sql).param("shelf_id", s.getParaId().toString())
+                .param("note_id", noteId.toString()).update();
     }
 
     @Override
@@ -172,15 +156,12 @@ public class ShelfRepository implements ShelfPort {
                 on sn.note_id = n.note_id
                 where sn.shelf_id = :shelfId
                 """;
-        return jdbcClient.sql(sql)
-                .param("shelfId", para.getParaId().toString())
+        return jdbcClient.sql(sql).param("shelfId", para.getParaId().toString())
                 .query(noteRowMapper).list();
     }
 
     private final RowMapper<Note> noteRowMapper = (rs, idx) -> {
-        return new Note(
-                Id.valueOf(rs.getString("note_id")),
-                rs.getString("title"),
+        return new Note(Id.valueOf(rs.getString("note_id")), rs.getString("title"),
                 rs.getString("content"));
     };
 
@@ -190,10 +171,8 @@ public class ShelfRepository implements ShelfPort {
                 delete from para_shelf_note
                 where shelf_id = :shelf_id and note_id = :note_id
                 """;
-        jdbcClient.sql(sql)
-                .param("shelf_id", s.getParaId().toString())
-                .param("note_id", noteId.toString())
-                .update();
+        jdbcClient.sql(sql).param("shelf_id", s.getParaId().toString())
+                .param("note_id", noteId.toString()).update();
     }
 
     // shelf 검색 
@@ -214,15 +193,14 @@ public class ShelfRepository implements ShelfPort {
                 limit :limit
                 """.replace("$lastSeenKeyExpression", lastSeenKeyExpression);
 
-        return jdbcClient.sql(sql)
-                .params(toSearchMap.apply(searchString, page))
+        return jdbcClient.sql(sql).params(toSearchMap.apply(searchString, page))
                 .query(searchShelfRowMapper).list();
     }
 
     private final Predicate<Object> isNullExpr = value -> {
         return switch (value) {
             case String s when s.length() == 0 -> true;
-            case String s -> false;
+            case String _ -> false;
             case null, default -> true;
         };
     };
@@ -236,15 +214,16 @@ public class ShelfRepository implements ShelfPort {
         }
         return value;
     };
-    private final BiFunction<String, Page, Map<String, Object>> toSearchMap = (searchString, page) -> {
-        var map = new HashMap<String, Object>();
-        map.put("title", searchString);
-        map.put("limit", page.limit());
-        if (!isNullExpr.test(page.lastSeenKey())) {
-            map.put("lastSeenKey", qStr.apply(page.lastSeenKey(), isNullExpr));
-        }
-        return map;
-    };
+    private final BiFunction<String, Page, Map<String, Object>> toSearchMap =
+            (searchString, page) -> {
+                var map = new HashMap<String, Object>();
+                map.put("title", searchString);
+                map.put("limit", page.limit());
+                if (!isNullExpr.test(page.lastSeenKey())) {
+                    map.put("lastSeenKey", qStr.apply(page.lastSeenKey(), isNullExpr));
+                }
+                return map;
+            };
 
     private final RowMapper<Shelf> searchShelfRowMapper = (rs, idx) -> {
         var shelfId = Id.valueOf(rs.getString("shelf_id"));
@@ -258,6 +237,6 @@ public class ShelfRepository implements ShelfPort {
             case null, default -> null;
         };
     };
-    
+
 
 }

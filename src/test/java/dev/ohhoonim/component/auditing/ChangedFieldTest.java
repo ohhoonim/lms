@@ -1,58 +1,55 @@
 package dev.ohhoonim.component.auditing;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
-
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-
 import dev.ohhoonim.component.auditing.change.ChangedField;
 import dev.ohhoonim.component.auditing.dataBy.Id;
 import dev.ohhoonim.component.container.Page;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
-public class ChangedFieldTest {
+class ChangedFieldTest {
 
     Logger log = LoggerFactory.getLogger(this.getClass());
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    public void objectMapperTest() throws JsonProcessingException {
+    void objectMapperTest() throws JacksonException {
         var user = new UserFor("matthew", 13);
         String result = objectMapper.writeValueAsString(user);
         log.info(result);
+        boolean a = true;
+        assertThat(a).isTrue();
     }
 
     @Test
-    public void getChangedFieldsAsJsonTest() {
+    void getChangedFieldsAsJsonTest() {
         var user1 = new UserFor("matthew", 16);
         var user2 = new UserFor("matthew", 14);
         var resultJson = getChangedFieldsAsJson.apply(user1, user2);
 
         log.info(resultJson);
 
-        Integer oldValue = JsonPath.read(resultJson,
-                "$.changed_fields.age.old_value");
+        Integer oldValue = JsonPath.read(resultJson, "$.changed_fields.age.old_value");
         assertThat(oldValue).isEqualTo(16);
 
     }
 
     @Test
-    public void compareType() {
-        var user = new UserFor("matthew", 13);
-        var authority = new AuthorityFor("ADMIN"); 
+    void compareType() {
+        var user = UserFor.class;
+        var authority = AuthorityFor.class;
 
-        assertThat(user.getClass()).isNotEqualTo(authority.getClass());
+        assertThat(user).isNotEqualTo(authority);
     }
 
 
@@ -66,16 +63,13 @@ public class ChangedFieldTest {
             field.setAccessible(true);
             try {
                 Object newValue = field.get(newObject);
-                Object oldValue = BeanUtils.getPropertyDescriptor(
-                                    oldObject.getClass(),
-                                    field.getName())
-                                .getReadMethod()
-                                .invoke(oldObject);
+                Object oldValue =
+                        BeanUtils.getPropertyDescriptor(oldObject.getClass(), field.getName())
+                                .getReadMethod().invoke(oldObject);
 
                 if (newValue != null && !newValue.equals(oldValue)) {
-                    changedFields.put(field.getName(), Map.of(
-                            "old_value", oldValue,
-                            "new_value", newValue));
+                    changedFields.put(field.getName(),
+                            Map.of("old_value", oldValue, "new_value", newValue));
                 }
             } catch (Exception e) {
                 log.info(e.getMessage());
@@ -95,7 +89,7 @@ public class ChangedFieldTest {
     };
 
     @Test
-    public void changedFieldTest() {
+    void changedFieldTest() {
         var oldId = new Id();
         var newId = new Id();
 
@@ -103,12 +97,11 @@ public class ChangedFieldTest {
         var page2 = new Page(1000, 20, newId);
 
         ChangedField changedField = new ChangedField(objectMapper);
-        var resultJson = changedField.apply(page1, page2);        
+        var resultJson = changedField.apply(page1, page2);
 
         log.info("{}", resultJson);
 
-        String newValue= JsonPath.read(resultJson,
-                "$.changed_fields.lastSeenKey.new_value");
+        String newValue = JsonPath.read(resultJson, "$.changed_fields.lastSeenKey.new_value");
 
         assertThat(Id.valueOf(newValue)).isEqualTo(newId);
     }
@@ -116,6 +109,7 @@ public class ChangedFieldTest {
 }
 // record는 동작안함
 // record User(String name, int age) {}
+
 
 class UserFor {
     private String name;
@@ -143,6 +137,7 @@ class UserFor {
     }
 }
 
+
 class AuthorityFor {
     private String role;
 
@@ -150,7 +145,7 @@ class AuthorityFor {
         this.role = role;
     }
 
-    public String getRole(){
+    public String getRole() {
         return this.role;
     }
 

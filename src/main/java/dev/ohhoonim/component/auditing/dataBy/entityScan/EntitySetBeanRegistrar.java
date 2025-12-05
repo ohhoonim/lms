@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -13,18 +12,18 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.filter.AssignableTypeFilter;
-import org.springframework.lang.NonNull;
-
 import dev.ohhoonim.component.auditing.dataBy.Entity;
 import tools.jackson.databind.util.NamingStrategyImpls;
 
 public class EntitySetBeanRegistrar implements ImportBeanDefinitionRegistrar {
     @Override
-    public void registerBeanDefinitions(@NonNull AnnotationMetadata importingClassMetadata,
-            @NonNull BeanDefinitionRegistry registry) {
-        Map<String, Object> attrs = importingClassMetadata.getAnnotationAttributes(BusinessEntityScan.class.getName());
+    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata,
+            BeanDefinitionRegistry registry) {
+        Map<String, Object> attrs =
+                importingClassMetadata.getAnnotationAttributes(BusinessEntityScan.class.getName());
         if (attrs == null) {
-            throw new IllegalArgumentException("@BusinessEntityScan annotation attributes not found.");
+            throw new IllegalArgumentException(
+                    "@BusinessEntityScan annotation attributes not found.");
         }
         Object basePackagesObj = attrs.get("basePackages");
         if (!(basePackagesObj instanceof String[])) {
@@ -32,7 +31,8 @@ public class EntitySetBeanRegistrar implements ImportBeanDefinitionRegistrar {
         }
         String[] basePackages = (String[]) basePackagesObj;
 
-        ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+        ClassPathScanningCandidateComponentProvider scanner =
+                new ClassPathScanningCandidateComponentProvider(false);
         scanner.addIncludeFilter(new AssignableTypeFilter(Entity.class));
 
         Set<String> entities = new HashSet<>();
@@ -46,7 +46,8 @@ public class EntitySetBeanRegistrar implements ImportBeanDefinitionRegistrar {
             }
         }
 
-        RootBeanDefinition beanDefinition = new RootBeanDefinition(BusinessEntitiesFactoryBean.class);
+        RootBeanDefinition beanDefinition =
+                new RootBeanDefinition(BusinessEntitiesFactoryBean.class);
         beanDefinition.getConstructorArgumentValues().addGenericArgumentValue(entities);
 
         registry.registerBeanDefinition("businessEntityMap", beanDefinition);
