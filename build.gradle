@@ -48,7 +48,7 @@ dependencies {
 	implementation 'org.apache.poi:poi-ooxml:5.4.1'
 	//    - optional: docker, p6spy
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.12.0'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:2.0.0'
 	// database - postgresql, testcontainers
 	implementation 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
