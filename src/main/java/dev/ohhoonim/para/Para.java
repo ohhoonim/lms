@@ -2,9 +2,8 @@ package dev.ohhoonim.para;
 
 import java.lang.reflect.Constructor;
 import java.time.LocalDate;
-
-import dev.ohhoonim.component.auditing.dataBy.Entity;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Entity;
+import dev.ohhoonim.component.auditing.model.Id;
 import dev.ohhoonim.para.Para.Shelf.Archive;
 import dev.ohhoonim.para.Para.Shelf.Area;
 import dev.ohhoonim.para.Para.Shelf.Resource;

@@ -1,6 +1,6 @@
 package dev.ohhoonim.user.application;
 
-import dev.ohhoonim.component.auditing.dataBy.MasterCode;
+import dev.ohhoonim.component.auditing.model.MasterCode;
 
 public enum UserEnableStatus implements MasterCode {
     Activate("Y", "user.status_activate"), 

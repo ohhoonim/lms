@@ -2,10 +2,8 @@ package dev.ohhoonim.para.activity.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.para.Note;
 import dev.ohhoonim.para.Para;

@@ -1,7 +1,7 @@
 package dev.ohhoonim.component.container;
 
-import dev.ohhoonim.component.auditing.dataBy.Created;
-import dev.ohhoonim.component.auditing.dataBy.Modified;
+import dev.ohhoonim.component.auditing.model.Created;
+import dev.ohhoonim.component.auditing.model.Modified;
 
 // Valued Object
 // value object 아님

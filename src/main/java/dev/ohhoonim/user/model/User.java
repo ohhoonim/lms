@@ -2,9 +2,9 @@ package dev.ohhoonim.user.model;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.ohhoonim.component.auditing.dataBy.DataBy;
-import dev.ohhoonim.component.auditing.dataBy.Entity;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.DataBy;
+import dev.ohhoonim.component.auditing.model.Entity;
+import dev.ohhoonim.component.auditing.model.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Entity {
+public sealed class User implements Entity permits UserBatchService, UserPipService, UserService {
 
     private Id userId;
     private String username;
@@ -43,3 +43,57 @@ public class User implements Entity {
         return this.userId;
     }
 }
+
+/*
+ 
+
+```plantuml
+@startuml
+
+entity User <<AggregateRoot>>{
+  userId: Id
+  username: string {required, unique}
+  password: string
+  name: string
+  email: string
+  contact: string
+  accountStatus: AccountStatus
+}
+
+entity AccountStatus {
+  signUserId: User 
+  enabled: boolean
+  locked: boolean
+  failedAttemptCount: number
+}
+
+entity ChangeDetail{
+  changeDetailId: Id
+  attributeName: string
+  oldValue: SignUserAttribute
+  newValue: SignUserAttribute
+}
+
+entity PendingChange {
+  pendingChangeId: Id
+  userId: User 
+  changeType: string
+  effectiveDate: datatime
+  status: string
+}
+
+entity UserAttribute {
+  attributeId: Id
+  name: string
+  value: string
+}
+
+User [username] -left-  AccountStatus
+User "1" --> "attributes[0..*]" UserAttribute 
+User "1" -- "pendingChanges[0..*] " PendingChange
+
+PendingChange "1" --> "changeDetails [1..*]" ChangeDetail
+
+@enduml
+```
+ */

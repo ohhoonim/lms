@@ -3,12 +3,10 @@ package dev.ohhoonim.user.infra;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Component;
-
-import dev.ohhoonim.component.auditing.dataBy.Created;
-import dev.ohhoonim.component.auditing.dataBy.Id;
-import dev.ohhoonim.component.auditing.dataBy.Modified;
+import dev.ohhoonim.component.auditing.model.Created;
+import dev.ohhoonim.component.auditing.model.Id;
+import dev.ohhoonim.component.auditing.model.Modified;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
@@ -123,7 +121,7 @@ public class UserAdaptor implements UserPort, PendingChangePort {
         Integer totalCount = userMapper.findUsersTotal(condition.getReq());
         if (totalCount > 0) {
             List<User> users = userMapper.findUsers(condition.getReq(), reqPage);
-            Id lastSeenKey = users.stream().reduce((f, s) -> s).map(s -> s.getUserId())
+            Id lastSeenKey = users.stream().reduce((_, s) -> s).map(s -> s.getUserId())
                     .orElseGet(() -> null);
             return new Vo(users, new Page(totalCount, reqPage.limit(), lastSeenKey));
         }
@@ -150,4 +148,5 @@ public class UserAdaptor implements UserPort, PendingChangePort {
     public void addChangeDetail(ChangeDetail changeDetail) {
         pendingMapper.addChangeDetail(changeDetail);
     }
+
 }

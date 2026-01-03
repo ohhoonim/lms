@@ -35,7 +35,7 @@ public class SignUserAdaptorTest {
         when(passwordEncoder.encode(any())).thenReturn("encoded_password");
 
         var signUser = signUserAdaptor.findByUsernamePassword(name, password);
-        assertThat(signUser.get().name()).isEqualTo("matthew");
+        assertThat(signUser.get().getName()).isEqualTo("matthew");
 
         // verify(publisher, times(1)).publishEvent(any());
     }

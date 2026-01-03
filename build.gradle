@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '4.0.0'
+	id 'org.springframework.boot' version '4.0.1'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -24,7 +24,7 @@ repositories {
 }
 
 ext {
-	set('springModulithVersion', "2.0.0")
+	set('springModulithVersion', "2.0.1")
 }
 
 dependencies {
@@ -43,7 +43,7 @@ dependencies {
 	implementation 'com.github.f4b6a3:ulid-creator:5.2.3'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'commons-io:commons-io:2.19.0'
+	implementation 'commons-io:commons-io:2.21.0'
 	implementation 'org.aspectj:aspectjweaver:1.9.24'
 	implementation 'org.apache.poi:poi-ooxml:5.4.1'
 	//    - optional: docker, p6spy
@@ -56,6 +56,7 @@ dependencies {
 	testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
 	// mybatis	
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.0.0'
+	implementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.2'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:4.0.0'
 	// security and jwt
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -66,7 +67,9 @@ dependencies {
 	// modulith: core
 	implementation 'org.springframework.modulith:spring-modulith-starter-core'
 	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
-
+	// cache
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-redis-test'
 }
 
 dependencyManagement {

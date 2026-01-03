@@ -35,5 +35,4 @@ public interface UserPort {
     Vo<List<User>> findUsers(Search<UserReq> condition);
 
     Optional<User> findByUsername(String username);
-    
 }

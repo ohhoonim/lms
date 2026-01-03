@@ -14,8 +14,8 @@ import dev.ohhoonim.component.container.Vo;
 import dev.ohhoonim.user.application.UserEnableStatus;
 import dev.ohhoonim.user.application.UserLockStatus;
 import dev.ohhoonim.user.application.UserReq;
-import dev.ohhoonim.user.internal.UserService;
 import dev.ohhoonim.user.model.User;
+import dev.ohhoonim.user.model.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController

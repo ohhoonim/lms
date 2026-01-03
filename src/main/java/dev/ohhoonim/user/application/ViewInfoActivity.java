@@ -1,15 +1,16 @@
 package dev.ohhoonim.user.application;
 
 import java.util.List;
+
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
 import dev.ohhoonim.user.model.User;
 
 public interface ViewInfoActivity {
 
-  Vo<List<User>> users(Search<UserReq> condition);
+    Vo<List<User>> users(Search<UserReq> condition);
 
-  User userInfo(User username);
+    User userInfo(User username);
 }
 
 /*

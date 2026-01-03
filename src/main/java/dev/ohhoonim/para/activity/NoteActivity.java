@@ -3,8 +3,7 @@ package dev.ohhoonim.para.activity;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.component.container.Vo;
 import dev.ohhoonim.para.Note;

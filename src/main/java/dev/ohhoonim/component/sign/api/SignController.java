@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
-import dev.ohhoonim.component.sign.SignUser;
-import dev.ohhoonim.component.sign.SignedToken;
-import dev.ohhoonim.component.sign.activity.SignActivity;
+import dev.ohhoonim.component.sign.application.SignActivity;
+import dev.ohhoonim.component.sign.model.SignUser;
+import dev.ohhoonim.component.sign.model.SignedToken;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

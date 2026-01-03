@@ -1,6 +1,6 @@
 package dev.ohhoonim.user.infra;
 
-import dev.ohhoonim.component.auditing.dataBy.MasterCode;
+import dev.ohhoonim.component.auditing.model.MasterCode;
 
 public enum PendingChangeStatus implements MasterCode {
     Pending("pending", "pendingChangeStatus.pending"),

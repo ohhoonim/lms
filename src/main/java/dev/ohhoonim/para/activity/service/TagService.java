@@ -1,9 +1,7 @@
 package dev.ohhoonim.para.activity.service;
 
 import java.util.Set;
-
 import org.springframework.stereotype.Service;
-
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.para.Tag;
 import dev.ohhoonim.para.activity.TagActivity;

@@ -1,7 +1,7 @@
 package dev.ohhoonim.para;
 
-import dev.ohhoonim.component.auditing.dataBy.Entity;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Entity;
+import dev.ohhoonim.component.auditing.model.Id;
 
 public class Tag implements Entity{
     private Id tagId;

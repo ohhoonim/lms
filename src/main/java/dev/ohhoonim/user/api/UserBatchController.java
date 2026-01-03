@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import dev.ohhoonim.user.internal.UserBatchService;
 import dev.ohhoonim.user.model.User;
+import dev.ohhoonim.user.model.UserBatchService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -47,7 +47,7 @@ public class UserBatchController {
 
         try (var csv = uploadedFile.getInputStream()) {
             return userBatchService.translateCsvToUsers(csv);
-        } catch (Exception _) {
+        } catch (Exception e) {
             throw new RuntimeException("파일 처리중 에러가 발생하였습니다");
         }
     }
@@ -61,7 +61,7 @@ public class UserBatchController {
 
         try (var excel = uploadedFile.getInputStream()) {
             return userBatchService.translateExcelToUsers(excel);
-        } catch (Exception _) {
+        } catch (Exception e) {
             throw new RuntimeException("파일 처리중 에러가 발생하였습니다");
         }
     }

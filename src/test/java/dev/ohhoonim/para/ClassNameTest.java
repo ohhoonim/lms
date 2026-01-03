@@ -2,7 +2,7 @@ package dev.ohhoonim.para;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 import dev.ohhoonim.para.api.NoteController;
 
 public class ClassNameTest {

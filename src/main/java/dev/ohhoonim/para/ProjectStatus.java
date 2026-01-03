@@ -1,6 +1,6 @@
 package dev.ohhoonim.para;
 
-import dev.ohhoonim.component.auditing.dataBy.MasterCode;
+import dev.ohhoonim.component.auditing.model.MasterCode;
 
 public enum ProjectStatus implements MasterCode{
     Backlog("Backlog","backlog"), 
