@@ -2,10 +2,9 @@ package dev.ohhoonim.user.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import dev.ohhoonim.component.auditing.dataBy.DataBy;
-import dev.ohhoonim.component.auditing.dataBy.Entity;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.DataBy;
+import dev.ohhoonim.component.auditing.model.Entity;
+import dev.ohhoonim.component.auditing.model.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

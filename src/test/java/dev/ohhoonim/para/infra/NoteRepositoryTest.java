@@ -2,7 +2,6 @@ package dev.ohhoonim.para.infra;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.test.autoconfigure.JdbcTest;
@@ -12,8 +11,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 import dev.ohhoonim.para.Note;
 import dev.ohhoonim.para.Tag;
 
@@ -25,7 +23,7 @@ public class NoteRepositoryTest {
     @Container
     @ServiceConnection
     private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            DockerImageName.parse("postgres:17.2-alpine"));
+            DockerImageName.parse("postgres:18.1-alpine"));
 
     @Autowired
     NoteRepository noteRepository;

@@ -1,11 +1,9 @@
 package dev.ohhoonim.user.infra;
 
 import java.util.List;
-
 import org.springframework.stereotype.Component;
-
-import dev.ohhoonim.component.sign.Authority;
-import dev.ohhoonim.component.sign.activity.port.AuthorityPort;
+import dev.ohhoonim.component.sign.model.Authority;
+import dev.ohhoonim.component.sign.port.AuthorityPort;
 
 @Component
 public class AuthorityAdaptor implements AuthorityPort {

@@ -12,7 +12,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
-import dev.ohhoonim.user.internal.UserBatchService;
+import dev.ohhoonim.user.model.UserBatchService;
 import tools.jackson.databind.ObjectMapper;
 
 @WebMvcTest(UserBatchController.class)

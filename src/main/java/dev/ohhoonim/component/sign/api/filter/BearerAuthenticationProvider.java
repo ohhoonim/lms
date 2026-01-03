@@ -9,8 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import dev.ohhoonim.component.sign.activity.BearerTokenActivity;
-import dev.ohhoonim.component.sign.activity.port.AuthorityPort;
+import dev.ohhoonim.component.sign.application.BearerTokenActivity;
+import dev.ohhoonim.component.sign.port.AuthorityPort;
 import lombok.RequiredArgsConstructor;
 
 @Component

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dev.ohhoonim.menu.infra.MenuItemMapper">
+    <resultMap id="menuAttributeTag" type="dev.ohhoonim.component.menu.model.MenuAttributeTag">
+        <id column="menu_attribute_tag_id" jdbcType="VARCHAR" property="menuAttributeTagId" />
+        <result column="menu_item_id" jdbcType="VARCHAR" property="menuItemId" />
+        <result column="attribute" jdbcType="VARCHAR" property="attribute" />
+        <result column="tag" jdbcType="VARCHAR" property="tag" />
+        <!-- <result column="creator" jdbcType="VARCHAR" property="creator" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" /> -->
+    </resultMap>
+
+    <resultMap id="menuItem" type="dev.ohhoonim.component.menu.model.MenuItem">
+        <id column="menu_item_id" jdbcType="VARCHAR" property="menuItemId" />
+        <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
+        <result column="parent_menu_item" jdbcType="VARCHAR" property="parentMenuItem" />
+        <result column="menu_text" jdbcType="VARCHAR" property="menuText" />
+        <result column="target_url" jdbcType="VARCHAR" property="targetUrl" />
+        <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
+        <result column="is_active" jdbcType="BIT" property="isActive" />
+        <result column="icon_class" jdbcType="VARCHAR" property="iconClass" />
+        <result column="sensitivity_level" jdbcType="VARCHAR" property="sensitivityLevel" />
+        <!-- <result column="creator" jdbcType="VARCHAR" property="creator" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" /> -->
+    </resultMap>
+
+    <resultMap id="menuText" type="dev.ohhoonim.component.menu.model.MenuText">
+        <id column="menu_text_id" jdbcType="VARCHAR" property="menuTextId" />
+        <result column="menu_item_id" jdbcType="VARCHAR" property="menuItemId" />
+        <result column="text" jdbcType="VARCHAR" property="text" />
+        <result column="language_code" jdbcType="CHAR" property="languageCode" />
+        <!-- <result column="creator" jdbcType="VARCHAR" property="creator" />
+        <result column="created" jdbcType="TIMESTAMP" property="created" />
+        <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+        <result column="modified" jdbcType="TIMESTAMP" property="modified" /> -->
+    </resultMap>
+
+</mapper>

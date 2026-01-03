@@ -1,7 +1,7 @@
 package dev.ohhoonim.component.attachFile;
 
-import dev.ohhoonim.component.auditing.dataBy.DataBy;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.DataBy;
+import dev.ohhoonim.component.auditing.model.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

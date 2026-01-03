@@ -1,11 +1,9 @@
 package dev.ohhoonim.component.attachFile;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 
 @Mapper
 public interface AttachFileMapper {

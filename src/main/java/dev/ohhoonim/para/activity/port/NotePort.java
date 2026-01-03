@@ -2,8 +2,7 @@ package dev.ohhoonim.para.activity.port;
 
 import java.util.List;
 import java.util.Optional;
-
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.para.Note;
 

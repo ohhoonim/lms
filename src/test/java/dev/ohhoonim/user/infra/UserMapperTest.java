@@ -1,9 +1,7 @@
 package dev.ohhoonim.user.infra;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.slf4j.Logger;
@@ -17,10 +15,9 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
-import dev.ohhoonim.component.auditing.dataBy.Created;
-import dev.ohhoonim.component.auditing.dataBy.Id;
-import dev.ohhoonim.component.auditing.dataBy.Modified;
+import dev.ohhoonim.component.auditing.model.Created;
+import dev.ohhoonim.component.auditing.model.Id;
+import dev.ohhoonim.component.auditing.model.Modified;
 import dev.ohhoonim.component.container.Page;
 import dev.ohhoonim.component.sign.api.PasswordConfig;
 import dev.ohhoonim.user.application.UserReq;
@@ -38,7 +35,7 @@ public class UserMapperTest {
     @Container
     @ServiceConnection
     private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            DockerImageName.parse("postgres:17.2-alpine"));
+            DockerImageName.parse("postgres:18.1-alpine"));
 
     @Autowired
     UserMapper userMapper;

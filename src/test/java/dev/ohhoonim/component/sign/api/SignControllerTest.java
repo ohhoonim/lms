@@ -23,28 +23,28 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
-import dev.ohhoonim.component.sign.Authority;
-import dev.ohhoonim.component.sign.SignedToken;
-import dev.ohhoonim.component.sign.activity.SignActivity;
-import dev.ohhoonim.component.sign.activity.port.AuthorityPort;
-import dev.ohhoonim.component.sign.activity.service.BearerTokenService;
 import dev.ohhoonim.component.sign.api.SignController.LoginReq;
 import dev.ohhoonim.component.sign.api.filter.BearerAuthenticationFilter;
 import dev.ohhoonim.component.sign.api.filter.BearerAuthenticationProvider;
 import dev.ohhoonim.component.sign.api.filter.BearerAuthenticationToken;
+import dev.ohhoonim.component.sign.application.SignActivity;
+import dev.ohhoonim.component.sign.model.Authority;
+import dev.ohhoonim.component.sign.model.BearerTokenService;
+import dev.ohhoonim.component.sign.model.SignedToken;
+import dev.ohhoonim.component.sign.port.AuthorityPort;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import tools.jackson.core.JacksonException;
-import tools.jackson.databind.ObjectMapper;
 
 @WebMvcTest(SignController.class)
 @Import({BearerTokenService.class, BearerAuthenticationFilter.class,
                 BearerAuthenticationProvider.class, SecurityConfig.class})
-class SignControllerTest {
+public class SignControllerTest {
 
         @InjectMocks
         SignController signController;
@@ -71,14 +71,14 @@ class SignControllerTest {
         ObjectMapper objectMapper;
 
         @Test
-        void signInTest() throws JacksonException {
+        void signInTest() throws JsonProcessingException {
                 var access = bearerTokenService.generateAccessToken("matthew", List.of());
                 var refresh = bearerTokenService.generateRefreshToken("matthew", List.of());
 
                 var search = new Search<>(new LoginReq("matthew", "abc123"), null);
 
                 SignedToken signedToken = new SignedToken(access, refresh);
-                when(signService.signIn(any())).thenReturn(new Vo<SignedToken>(signedToken));
+                when(signService.signIn(any())).thenReturn(new Vo(signedToken));
 
                 mockMvcTester.post().with(csrf()).uri("/sign/in")
                                 .content(objectMapper.writeValueAsString(search))
@@ -98,7 +98,7 @@ class SignControllerTest {
 
         @Test
         @DisplayName("filter : BearerAuthenticationToken으로 context에 저장되는지 확인")
-        void bearerFilterSuccessTest() throws ServletException, IOException {
+        public void bearerFilterSuccessTest() throws ServletException, IOException {
                 // doFilter 테스트를 위한 mock 설정
                 HttpServletRequest mockRequest = Mockito.mock(HttpServletRequest.class);
                 HttpServletResponse mockResponse = Mockito.mock(HttpServletResponse.class);

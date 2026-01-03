@@ -2,9 +2,8 @@ package dev.ohhoonim.para;
 
 import java.util.List;
 import java.util.Set;
-
-import dev.ohhoonim.component.auditing.dataBy.Entity;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Entity;
+import dev.ohhoonim.component.auditing.model.Id;
 
 public class Note implements Entity{
 

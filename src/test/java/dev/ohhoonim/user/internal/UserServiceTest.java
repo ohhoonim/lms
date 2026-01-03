@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.github.f4b6a3.ulid.UlidCreator;
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 import dev.ohhoonim.component.container.Search;
 import dev.ohhoonim.component.container.Vo;
 import dev.ohhoonim.user.application.UserEnableStatus;
@@ -28,6 +28,7 @@ import dev.ohhoonim.user.application.UserLockStatus;
 import dev.ohhoonim.user.application.UserReq;
 import dev.ohhoonim.user.model.User;
 import dev.ohhoonim.user.model.UserAttribute;
+import dev.ohhoonim.user.model.UserService;
 import dev.ohhoonim.user.port.UserPort;
 
 @ExtendWith(MockitoExtension.class)

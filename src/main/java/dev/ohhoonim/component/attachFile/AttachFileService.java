@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -17,10 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import dev.ohhoonim.component.auditing.dataBy.Created;
-import dev.ohhoonim.component.auditing.dataBy.Id;
-import dev.ohhoonim.component.auditing.dataBy.Modified;
+import dev.ohhoonim.component.auditing.model.Created;
+import dev.ohhoonim.component.auditing.model.Id;
+import dev.ohhoonim.component.auditing.model.Modified;
 import lombok.extern.slf4j.Slf4j;
 
 /**

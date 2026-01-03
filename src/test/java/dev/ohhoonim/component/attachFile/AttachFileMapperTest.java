@@ -1,9 +1,7 @@
 package dev.ohhoonim.component.attachFile;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.Instant;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +15,10 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+import dev.ohhoonim.component.auditing.model.Created;
+import dev.ohhoonim.component.auditing.model.Id;
+import dev.ohhoonim.component.auditing.model.Modified;
 
-import dev.ohhoonim.component.auditing.dataBy.Created;
-import dev.ohhoonim.component.auditing.dataBy.Id;
-import dev.ohhoonim.component.auditing.dataBy.Modified;
 
 @Testcontainers
 @ExtendWith(SpringExtension.class)
@@ -31,7 +29,7 @@ public class AttachFileMapperTest {
     @Container
     @ServiceConnection
     private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            DockerImageName.parse("postgres:17.2-alpine"));
+            DockerImageName.parse("postgres:18.1-alpine"));
 
     @Autowired
     AttachFileMapper mapper;

@@ -1,6 +1,6 @@
 package dev.ohhoonim.component.container;
 
-import dev.ohhoonim.component.auditing.dataBy.Id;
+import dev.ohhoonim.component.auditing.model.Id;
 
 public record Page(
 		Integer totalCount,

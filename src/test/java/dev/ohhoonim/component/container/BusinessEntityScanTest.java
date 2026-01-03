@@ -1,17 +1,14 @@
 package dev.ohhoonim.component.container;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-
-import dev.ohhoonim.component.auditing.dataBy.Entity;
+import dev.ohhoonim.component.auditing.model.Entity;
 import dev.ohhoonim.para.Note;
 
 @SpringBootTest

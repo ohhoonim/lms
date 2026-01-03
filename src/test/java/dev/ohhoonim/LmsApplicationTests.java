@@ -16,7 +16,7 @@ class LmsApplicationTests {
 	ApplicationModules modules = ApplicationModules.of(LmsApplication.class);
 
 	@Test
-	public void writeDocumentationSnippets() {
+	void writeDocumentationSnippets() {
 		new Documenter(modules)
 				.writeModulesAsPlantUml()
 				.writeIndividualModulesAsPlantUml();

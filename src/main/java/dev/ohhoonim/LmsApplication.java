@@ -3,8 +3,8 @@ package dev.ohhoonim;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
+import dev.ohhoonim.component.auditing.model.BusinessEntityScan;
 
-import dev.ohhoonim.component.auditing.dataBy.entityScan.BusinessEntityScan;
 
 @EnableAsync
 @SpringBootApplication

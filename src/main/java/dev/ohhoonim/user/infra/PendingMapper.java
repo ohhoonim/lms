@@ -2,10 +2,8 @@ package dev.ohhoonim.user.infra;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import dev.ohhoonim.user.model.ChangeDetail;
 import dev.ohhoonim.user.model.PendingChange;
 

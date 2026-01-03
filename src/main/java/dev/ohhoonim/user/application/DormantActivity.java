@@ -2,17 +2,18 @@ package dev.ohhoonim.user.application;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import dev.ohhoonim.user.model.User;
 
 public interface DormantActivity {
+    
+    void dormantUser(User username);
 
-  void dormantUser(User username);
+    int increaseFailedAttemptCount(User username, boolean isInit);
 
-  int increaseFailedAttemptCount(User username, boolean isInit);
+    LocalDateTime lastLogin(User username);
 
-  LocalDateTime lastLogin(User username);
-
-  void batchDormantUser(List<User> users);
+    void batchDormantUser(List<User> users);
 }
 /*
 
